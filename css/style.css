@@ -1,0 +1,11 @@
+ul.list-unstyled.inlineColumns {
+    width: 50px;
+    display: inline-block;
+}
+
+ul.list-unstyled.inline li:hover {
+    cursor: pointer;
+    color: #141619;
+    background-color: #d3d3d4;
+    border-color: #bcbebf;
+}
