@@ -1,6 +1,8 @@
 ul.list-unstyled.inlineColumns {
     width: 50px;
+    width: 50px;
     display: inline-block;
+    background-color: #d3d3d4;
 }
 
 ul.list-unstyled.inline li:hover {
@@ -8,4 +10,17 @@ ul.list-unstyled.inline li:hover {
     color: #141619;
     background-color: #d3d3d4;
     border-color: #bcbebf;
+}
+
+[data-value] {
+    cursor: pointer;
+}
+
+[data-value]:hover {
+    background-color: #999;
+}
+
+[data-value].clicked {
+
+    background-color: #ff0000;
 }

@@ -6,7 +6,7 @@ for (let a = 0; a < boards.length; a++) {
     for (let j = 0; j < xaxis.length; j++) {
         gridLayout = gridLayout + ` <ul class="list-unstyled inlineColumns"><li> <h2 class="text-capitalize text-center pt-2">${xaxis[j]}</h2></li>`;
         for (let i = 0; i < yaxis.length; i++) {
-            gridLayout = gridLayout + "<li data-value='" + xaxis[j] + yaxis[i] + "'>" + xaxis[j] + yaxis[i] + "</li>";
+            gridLayout = gridLayout + `<li data-value='${xaxis[j] + yaxis[i]}' onClick="selectSq(&#34;#${boards[a]} li[data-value='${xaxis[j]}${yaxis[i]}']&#34;)" >${xaxis[j] + yaxis[i]} </li>`;
         }
         gridLayout = gridLayout + "</ul>";
     }
@@ -18,4 +18,9 @@ for (let a = 0; a < boards.length; a++) {
             document.getElementById("computerBoard").innerHTML = gridLayout;
             break;
     }
+}
+
+function selectSq(whichSq) {
+    console.log("whichSq: " + whichSq);
+    document.querySelector(whichSq).classList.add("clicked");
 }
