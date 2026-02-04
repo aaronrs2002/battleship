@@ -350,51 +350,139 @@ function layoutBoats() {
 
 
 
-                /* 
-              
-                                  
-                                 case "Submarine":
-                                     for (let j = 1; j < 4; j++) {
-                                         if (document.querySelector("#computerBoard li[data-value='" + columns[column - 3] + rows[row] + "']")) {
-                                             document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").classList.add("alert-primary");
-                                             document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.type = boatsObj[i].type;
-                                         } else {
-                                             document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").classList.add("alert-primary");
-                                             document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.type = boatsObj[i].type;
-                                         }
-                                     }
-                                     break;
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-                                 case "Destroyer":
-                                     for (let j = 1; j < 3; j++) {
-                                         if (document.querySelector("#computerBoard li[data-value='" + columns[column - 2] + rows[row] + "']")) {
-                                             document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").classList.add("alert-primary");
-                                             document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.type = boatsObj[i].type;
-                                         } else {
-                                             document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").classList.add("alert-primary");
-                                             document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.type = boatsObj[i].type;
-                                         }
-                                     }
-                                     break;
-                             }*/
+
+
+
+                case "Submarine":
+                    let submarineSuccess = 0;
+                    function runSubmarine() {
+                        submarineSuccess = 0;
+                        let SubmarineDirection = Math.floor(Math.random() * (2 - 0) + 0);
+                        console.log("direction[SubmarineDirection]: " + direction[SubmarineDirection]);
+                        if (direction[SubmarineDirection] === "horizontal") {
+                            for (let j = 1; j < 4; j++) {
+                                if (document.querySelector("#computerBoard li[data-value='" + columns[column - 3] + rows[row] + "'][data-status='empty']")) {
+
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.type = boatsObj[i].type;
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.status = "occupied";
+                                } else {
+                                    if (document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "'][data-status='empty']")) {
+
+                                        document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.type = boatsObj[i].type;
+                                        document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.status = "occupied";
+                                    }
+
+                                }
+                            }
+
+
+
+                        } else {
+                            for (let j = 1; j < 4; j++) {
+                                if (document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - 3] + "'][data-status='empty']")) {
+
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - j] + "']").dataset.type = boatsObj[i].type;
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - j] + "']").dataset.status = "occupied";
+                                } else {
+                                    if (document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "'][data-status='empty']"))
+
+                                        document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.type = boatsObj[i].type;
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.status = "occupied";
+                                }
+                            }
+
+                        }
+
+                    }
+
+
+                    [].forEach.call(document.querySelectorAll("#computerBoard li[data-type='Submarine']"), (e) => {
+                        submarineSuccess = submarineSuccess + 1;
+                    });
+
+
+                    console.log("how many Submarine squares: " + submarineSuccess);
+                    if (submarineSuccess !== 3) {
+                        [].forEach.call(document.querySelectorAll("#computerBoard li[data-type='Submarine']"), (e) => {
+                            e.removeAttribute("data-type");
+                            e.dataset.status = "empty";
+                        });
+                        runSubmarine();
+                    }
+                    break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                case "Destroyer":
+                    let destroyerSuccess = 0;
+                    function runDestroyer() {
+                        destroyerSuccess = 0;
+                        let DestroyerDirection = Math.floor(Math.random() * (2 - 0) + 0);
+                        console.log("direction[DestroyerDirection]: " + direction[DestroyerDirection]);
+                        if (direction[DestroyerDirection] === "horizontal") {
+                            for (let j = 1; j < 3; j++) {
+                                if (document.querySelector("#computerBoard li[data-value='" + columns[column - 2] + rows[row] + "'][data-status='empty']")) {
+
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.type = boatsObj[i].type;
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.status = "occupied";
+                                } else {
+
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.type = boatsObj[i].type;
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.status = "occupied";
+                                }
+                            }
+
+                        } else {
+                            for (let j = 1; j < 3; j++) {
+                                if (document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - 2] + "'][data-status='empty']")) {
+
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - j] + "']").dataset.type = boatsObj[i].type;
+                                    document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - j] + "']").dataset.status = "occupied";
+                                } else {
+                                    if (document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "'][data-status='empty']")) {
+                                        document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.type = boatsObj[i].type;
+                                        document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.status = "occupied";
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    [].forEach.call(document.querySelectorAll("#computerBoard li[data-type='Destroyer']"), (e) => {
+                        destroyerSuccess = destroyerSuccess + 1;
+                    });
+
+
+                    console.log("how many Destroyer squares: " + destroyerSuccess);
+                    if (destroyerSuccess !== 3) {
+                        [].forEach.call(document.querySelectorAll("#computerBoard li[data-type='Destroyer']"), (e) => {
+                            e.removeAttribute("data-type");
+                            e.dataset.status = "empty";
+                        });
+                        runDestroyer();
+                    }
+
+                    break;
+
+
+
+
+
+
+
+
                 /*
            
            
