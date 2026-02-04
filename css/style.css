@@ -24,3 +24,11 @@ ul.list-unstyled.inline li:hover {
 
     background-color: #ff0000;
 }
+
+[data-status='occupied'] {
+    /*  background-color: aquamarine;*/
+    --bs-alert-color: var(--bs-primary-text-emphasis);
+    --bs-alert-bg: var(--bs-primary-bg-subtle);
+    --bs-alert-border-color: var(--bs-primary-border-subtle);
+    --bs-alert-link-color: var(--bs-primary-text-emphasis);
+}
