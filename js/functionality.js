@@ -1,6 +1,16 @@
 const xaxis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 let boards = ["playerBoard", "computerBoard"];
+let rowsHTML = "";
+let columnsHTML = "";
+for (let i = 0; i < 11; i++) {
+    rowsHTML = rowsHTML + "<option value='" + xaxis[i] + "'>" + xaxis[i] + "</option>";
+    columnsHTML = columnsHTML + "<option value='" + yaxis[i] + "'>" + yaxis[i] + "</option>";
+}
+
+document.querySelector("select[name='rows']").innerHTML = rowsHTML;
+document.querySelector("select[name='columns']").innerHTML = columnsHTML;
+
 for (let a = 0; a < boards.length; a++) {
     let gridLayout = "<div><h3>" + boards[a] + "</h3></div><hr/>";
     for (let j = 0; j < xaxis.length; j++) {
@@ -59,12 +69,18 @@ const boatsObj = [{
 },
 ];
 
+
+
 let rowsUsed = [];
 let columnsUsed = [];
 
 function layoutBoats() {
-
+    let = boatListHTML = "";
     for (let i = 0; i < boatsObj.length; i++) {
+
+        boatListHTML = boatListHTML + `<li><button class='btn btn-secondary btn-block' data-boat="${boatsObj[i].type}" onClick="selectBoat('${boatsObj[i].type}')" >${boatsObj[i].type}</button></li>`;
+
+
         let row;
         let column;
         column = Math.floor(Math.random() * (10 - 0) + 0);
@@ -384,7 +400,7 @@ function layoutBoats() {
         }
     }
 
-
+    document.getElementById("userBoats").innerHTML = boatListHTML;
     let boatLengths = [document.querySelectorAll("[data-type='Carrier']").length,
     document.querySelectorAll("[data-type='Battleship']").length,
     document.querySelectorAll("[data-type='Cruiser']").length,
@@ -423,3 +439,25 @@ No.	Class of ship	Size
 5	Destroyer	2
 
 */
+//Use place boats start*/
+
+
+function selectBoat(whichBoat) {
+    console.log("whichBoat: " + whichBoat);
+    document.getElementById("boatSelectedTitle").innerHTML = whichBoat;
+    [].forEach.call(document.querySelectorAll("#userBoats button"), (e) => {
+        if (e.dataset.boat === whichBoat) {
+            e.classList.add("active");
+        } else {
+            e.classList.remove("active");
+        }
+    })
+
+}
+
+
+function placeBoat() {
+
+
+
+}

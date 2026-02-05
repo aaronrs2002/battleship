@@ -19,7 +19,32 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
+
+                <h3>Place your boats</h3>
+                <div class="form-group">
+                    <ul id="userBoats" class="list-group-numbered"></ul>
+                    <div>
+                        <h3 id="boatSelectedTitle"></h3>
+                    </div>
+
+                    <div id="boatPlacementPanel" class="hide">
+                        <label>Direction</label>
+                        <select class="form-control" name="direction">
+                            <option value="up">UP</option>
+                            <option value="down">DOWN</option>
+                            <option value="left">LEFT</option>
+                            <option value="right">RIGHT</option>
+                        </select>
+                        <label>Column</label>
+                        <select class="form-control" name="columns"></select>
+                        <label>Row</label>
+                        <select class="form-control" name="rows"></select>
+                        <button class="btn form-control btn-primary my-4" onClick="PlaceBoat()">Sumbit</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
 
                 <div class="alert-light d-flex justify-content-center" id="playerBoard">
 
@@ -27,13 +52,15 @@
 
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-6">AI oponents strike list</div>
+            <div class="col-md-6">
 
                 <div class="alert-light d-flex justify-content-center" id="computerBoard">
 
                 </div>
 
             </div>
+
         </div>
 
     </div>
