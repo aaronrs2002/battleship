@@ -3,7 +3,7 @@ const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 let boards = ["playerBoard", "computerBoard"];
 let rowsHTML = "";
 let columnsHTML = "";
-for (let i = 0; i < 11; i++) {
+for (let i = 0; i < xaxis.length; i++) {
     rowsHTML = rowsHTML + "<option value='" + xaxis[i] + "'>" + xaxis[i] + "</option>";
     columnsHTML = columnsHTML + "<option value='" + yaxis[i] + "'>" + yaxis[i] + "</option>";
 }
@@ -461,12 +461,18 @@ function placeBoat() {
         document.getElementById("errorMessage").innerHTML = "Please select a boat."
         return false;
     }
+
     document.getElementById("errorMessage").innerHTML = "";
     let direction = document.querySelector("select[name='direction']").value;
     let row = document.querySelector("select[name='rows']").value;
     let column = document.querySelector("select[name='columns']").value;
     let activeBoat = document.querySelector("#userBoats button.active[data-boat]").dataset.boat;
     let activeSize = document.querySelector("#userBoats button.active[data-boat]").dataset.count;
+
+    if (!document.querySelector("#playerBoard li[data-value='" + row + column + "']").dataset.status === "empty") {
+        document.getElementById("errorMessage").innerHTML = "Please select a vacant spot.";
+        return false;
+    }
 
 
 
@@ -512,11 +518,14 @@ function placeBoat() {
 
         }
     }
-
+    /*to the right******************************************************/
     if (direction === "right") {
+        let start = xaxis.indexOf(row);
+
         for (let i = 0; i < activeSize; i++) {
-            if (document.querySelector("#playerBoard li[data-value='" + row + column + "'][data-status='empty']")) {
-                let start = xaxis.indexOf(row);
+
+            if (document.querySelector("#playerBoard li[data-status='empty'][data-value='" + xaxis[start + i] + column + "']")) {
+
 
                 console.log("start: " + start)
                 console.log("xaxis[row + i] + column: " + xaxis[start + i] + column);
@@ -537,13 +546,14 @@ function placeBoat() {
         }
     }
 
-
-
+    /*to the left******************************************************/
 
     if (direction === "left") {
+        let start = xaxis.indexOf(row);
         for (let i = 0; i < activeSize; i++) {
-            if (document.querySelector("#playerBoard li[data-value='" + row + column + "'][data-status='empty']")) {
-                let start = xaxis.indexOf(row);
+            if (document.querySelector("#playerBoard li[data-status='empty'][data-value='" + xaxis[start - i] + column + "']")) {
+
+
 
                 console.log("start: " + start)
                 console.log("xaxis[row + i] + column: " + xaxis[start + i] + column);
