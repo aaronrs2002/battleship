@@ -32,6 +32,8 @@ for (let a = 0; a < boards.length; a++) {
 
 function selectSq(cell) {
     console.log("cell: " + cell);
+
+    console.log("status: " + document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status)
     if (document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status === "empty") {
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").classList.add("alert-info");
     } else {
@@ -42,10 +44,61 @@ function selectSq(cell) {
     if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
         document.getElementById("placementPanel").classList.remove("hide");
         document.getElementById("gamePanel").classList.add("hide");
-        globalAlert("alert-success", "You won!")
+        globalAlert("alert-success", "You won!");
+        return false;
 
     }
+
+
+    /***the computer's turn */
+    let alreadyCalled = [];
+    function generate() {
+        let row;
+        let column;
+        column = yaxis[Math.floor(Math.random() * (10 - 0) + 0)];
+        row = xaxis[Math.floor(Math.random() * (10 - 0) + 0)];
+        return row + column;
+    }
+
+
+
+
+
+    function aiSelect() {
+        let thisCall = generate();
+
+        if (alreadyCalled.indexOf(thisCall) == -1) {
+            console.log("thisCall: " + thisCall);
+            //  console.log("status: " + document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status)
+            if (document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
+                document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
+            } else {
+                document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
+                document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
+            }
+            alreadyCalled.push();
+
+        } else {
+            aiSelect();
+        }
+    }
+    console.log("alreadyCalled: " + alreadyCalled);
+    aiSelect();
+
+
+
+};
+
+
+
+if (document.querySelectorAll("#playerBoard  li[data-status='hit']").length === 17) {
+    document.getElementById("placementPanel").classList.remove("hide");
+    document.getElementById("gamePanel").classList.add("hide");
+    globalAlert("alert-success", "You won!");
+
+
 }
+
 
 /*
 
