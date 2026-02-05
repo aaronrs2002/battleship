@@ -16,7 +16,7 @@ for (let a = 0; a < boards.length; a++) {
     for (let j = 0; j < xaxis.length; j++) {
         gridLayout = gridLayout + ` <ul class="list-unstyled inlineColumns"><li> <h2 class="text-capitalize text-center pt-2">${xaxis[j]}</h2></li>`;
         for (let i = 0; i < yaxis.length; i++) {
-            gridLayout = gridLayout + `<li class='alert'  data-value='${xaxis[j] + yaxis[i]}' onClick="selectSq(&#34;#${boards[a]} li[data-value='${xaxis[j]}${yaxis[i]}']&#34;)" data-status="empty">${xaxis[j] + yaxis[i]} </li>`;
+            gridLayout = gridLayout + `<li class='alert'  data-value='${xaxis[j] + yaxis[i]}' onClick="selectSq('${xaxis[j] + yaxis[i]}')" data-status="empty">${xaxis[j] + yaxis[i]} </li>`;
         }
         gridLayout = gridLayout + "</ul>";
     }
@@ -30,9 +30,21 @@ for (let a = 0; a < boards.length; a++) {
     }
 }
 
-function selectSq(whichSq) {
-    // console.log("whichSq: " + whichSq);
-    document.querySelector(whichSq).classList.add("clicked");
+function selectSq(cell) {
+    console.log("cell: " + cell);
+    if (document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status === "empty") {
+        document.querySelector("#computerBoard  li[data-value='" + cell + "']").classList.add("alert-info");
+    } else {
+        document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status = "hit";
+        document.querySelector("#computerBoard  li[data-value='" + cell + "']").classList.add("alert-danger");
+    }
+
+    if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
+        document.getElementById("placementPanel").classList.remove("hide");
+        document.getElementById("gamePanel").classList.add("hide");
+        globalAlert("alert-success", "You won!")
+
+    }
 }
 
 /*
