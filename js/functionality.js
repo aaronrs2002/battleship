@@ -12,7 +12,7 @@ document.querySelector("select[name='rows']").innerHTML = rowsHTML;
 document.querySelector("select[name='columns']").innerHTML = columnsHTML;
 
 for (let a = 0; a < boards.length; a++) {
-    let gridLayout = "<div><h3>" + boards[a] + "</h3></div><hr/>";
+    let gridLayout = "";
     for (let j = 0; j < xaxis.length; j++) {
         gridLayout = gridLayout + ` <ul class="list-unstyled inlineColumns"><li> <h2 class="text-capitalize text-center pt-2">${xaxis[j]}</h2></li>`;
         for (let i = 0; i < yaxis.length; i++) {
@@ -78,7 +78,7 @@ function layoutBoats() {
     let = boatListHTML = "";
     for (let i = 0; i < boatsObj.length; i++) {
 
-        boatListHTML = boatListHTML + `<li><button class='btn btn-secondary btn-block' data-boat="${boatsObj[i].type}" data-count="${boatsObj[i].count}" onClick="selectBoat('${boatsObj[i].type}')" >${boatsObj[i].type}</button></li>`;
+        boatListHTML = boatListHTML + `<li><button class='btn btn-secondary form-control my-2' data-boat="${boatsObj[i].type}" data-count="${boatsObj[i].count}" onClick="selectBoat('${boatsObj[i].type}')" >${boatsObj[i].type}</button></li>`;
 
 
         let row;
@@ -408,17 +408,17 @@ function layoutBoats() {
     document.querySelectorAll("[data-type='Destroyer']").length];
 
     for (let i = 0; i < boatLengths.length; i++) {
-        console.log("Boat: " + boatsObj[i].type + " - has this many: " + boatLengths[i]);
+        // console.log("Boat: " + boatsObj[i].type + " - has this many: " + boatLengths[i]);
         boatTotal = boatTotal + boatLengths[i];
     }
 
     if (boatTotal !== 17) {
-        console.log("Boat total: " + boatTotal);
+        // console.log("Boat total: " + boatTotal);
         [].forEach.call(document.querySelectorAll("[data-type]"), (e) => {
             e.removeAttribute("data-type");
             e.dataset.status = "empty";
         });
-        console.log("run layoutBoats() again!");
+        // console.log("run layoutBoats() again!");
         boatTotal = 0;
         layoutBoats();
     }
@@ -443,7 +443,7 @@ No.	Class of ship	Size
 
 
 function selectBoat(whichBoat) {
-    console.log("whichBoat: " + whichBoat);
+    // console.log("whichBoat: " + whichBoat);
     document.getElementById("boatSelectedTitle").innerHTML = whichBoat;
     [].forEach.call(document.querySelectorAll("#userBoats button"), (e) => {
         if (e.dataset.boat === whichBoat) {
@@ -457,6 +457,10 @@ function selectBoat(whichBoat) {
 
 
 function placeBoat() {
+    if (!document.querySelector("#userBoats button.active[data-boat]")) {
+        document.getElementById("errorMessage").innerHTML = "Please select a boat."
+        return false;
+    }
     document.getElementById("errorMessage").innerHTML = "";
     let direction = document.querySelector("select[name='direction']").value;
     let row = document.querySelector("select[name='rows']").value;
@@ -470,9 +474,9 @@ function placeBoat() {
 
     if (direction === "down") {
         for (let i = 0; i < activeSize; i++) {
-            if (document.querySelector("#playerBoard li[data-value='" + row + (column + i) + "']")) {
-                document.querySelector("#playerBoard li[data-value='" + row + (column + i) + "']").classList.add("alert-success");
-                document.querySelector("#playerBoard li[data-value='" + row + (column + i) + "']").dataset.status = activeBoat;
+            if (document.querySelector("#playerBoard li[data-value='" + row + (Number(column) + i) + "'][data-status='empty']")) {
+                document.querySelector("#playerBoard li[data-value='" + row + (Number(column) + i) + "']").classList.add("alert-success");
+                document.querySelector("#playerBoard li[data-value='" + row + (Number(column) + i) + "']").dataset.status = activeBoat;
             } else {
 
                 document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Pleas try again.";
@@ -481,7 +485,8 @@ function placeBoat() {
                     e.dataset.status = "empty";
                     e.classList.remove("alert-success");
 
-                })
+                });
+                return false;
 
             }
 
@@ -490,7 +495,7 @@ function placeBoat() {
 
     if (direction === "up") {
         for (let i = 0; i < activeSize; i++) {
-            if (document.querySelector("#playerBoard li[data-value='" + row + (column - i) + "']")) {
+            if (document.querySelector("#playerBoard li[data-value='" + row + (column - i) + "'][data-status='empty']")) {
                 document.querySelector("#playerBoard li[data-value='" + row + (column - i) + "']").classList.add("alert-success");
                 document.querySelector("#playerBoard li[data-value='" + row + (column - i) + "']").dataset.status = activeBoat;
             } else {
@@ -510,7 +515,7 @@ function placeBoat() {
 
     if (direction === "right") {
         for (let i = 0; i < activeSize; i++) {
-            if (document.querySelector("#playerBoard li[data-value='" + row + column + "']")) {
+            if (document.querySelector("#playerBoard li[data-value='" + row + column + "'][data-status='empty']")) {
                 let start = xaxis.indexOf(row);
 
                 console.log("start: " + start)
@@ -537,7 +542,7 @@ function placeBoat() {
 
     if (direction === "left") {
         for (let i = 0; i < activeSize; i++) {
-            if (document.querySelector("#playerBoard li[data-value='" + row + column + "']")) {
+            if (document.querySelector("#playerBoard li[data-value='" + row + column + "'][data-status='empty']")) {
                 let start = xaxis.indexOf(row);
 
                 console.log("start: " + start)
@@ -558,6 +563,9 @@ function placeBoat() {
 
         }
     }
+    if ((typeof document.querySelectorAll("#playerBoard  [data-status='" + activeBoat + "']").length) === "number") {
+        document.querySelector("button[data-boat='" + activeBoat + "']").remove();
 
+    }
 
 }

@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-md-6">
 
-                <h3>Place your boats</h3>
+                <label>Select a boat. Then submit where you want to place the selected boat.</label>
                 <div class="form-group">
                     <ul id="userBoats" class="list-group-numbered"></ul>
                     <div>
@@ -37,16 +37,17 @@
                             <option value="left">LEFT</option>
                             <option value="right">RIGHT</option>
                         </select>
-                        <label>Column</label>
-                        <select class="form-control" name="columns"></select>
                         <label>Row</label>
                         <select class="form-control" name="rows"></select>
+                        <label>Column</label>
+                        <select class="form-control" name="columns"></select>
+
                         <button class="btn form-control btn-primary my-4" onClick="placeBoat()">Sumbit</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-
+                <label>Player Board</label>
                 <div class="alert-light d-flex justify-content-center" id="playerBoard">
 
                 </div>
@@ -55,7 +56,7 @@
 
             <div class="col-md-6">AI oponents strike list</div>
             <div class="col-md-6">
-
+                <label>AI Board</label>
                 <div class="alert-light d-flex justify-content-center" id="computerBoard">
 
                 </div>
