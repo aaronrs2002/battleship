@@ -21,7 +21,7 @@ for (let a = 0; a < boards.length; a++) {
 }
 
 function selectSq(whichSq) {
-    console.log("whichSq: " + whichSq);
+    // console.log("whichSq: " + whichSq);
     document.querySelector(whichSq).classList.add("clicked");
 }
 
@@ -40,6 +40,7 @@ No.	Class of ship	Size
 const columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const rows = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 const direction = ["horizontal", "vertical"];
+let boatTotal = 0;
 
 const boatsObj = [{
     type: "Carrier", count: 5
@@ -80,7 +81,7 @@ function layoutBoats() {
 
                         let CarrierDirection = Math.floor(Math.random() * (2 - 0) + 0);
                         carrierSuccess = 0;
-                        console.log("direction[CarrierDirection]: " + direction[CarrierDirection]);
+                        //   console.log("direction[CarrierDirection]: " + direction[CarrierDirection]);
                         if (direction[CarrierDirection] === "horizontal") {
 
                             for (let j = 1; j < 6; j++) {
@@ -88,7 +89,7 @@ function layoutBoats() {
 
                                     document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.type = boatsObj[i].type;
                                     document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.status = "occupied";
-                                    console.log("horizontal Carrier")
+                                    //  console.log("horizontal Carrier")
                                     // carrierSuccess = carrierSuccess++;
                                 } else {
                                     //  console.log("columns[column + j] + rows[row]: " + columns[column + j] + rows[row]);
@@ -96,7 +97,7 @@ function layoutBoats() {
 
                                         document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.type = boatsObj[i].type;
                                         document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.status = "occupied";
-                                        console.log("horizontal Carrier")
+                                        // console.log("horizontal Carrier")
                                         // carrierSuccess = carrierSuccess++;
                                     }
 
@@ -109,7 +110,7 @@ function layoutBoats() {
 
                                     document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - j] + "']").dataset.type = boatsObj[i].type;
                                     document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - j] + "']").dataset.status = "occupied";
-                                    console.log("vertical Carrier")
+                                    //  console.log("vertical Carrier")
                                     // carrierSuccess = carrierSuccess++;
                                 } else {
                                     // console.log("columns[column] + rows[row + j]: " + columns[column] + rows[row + j])
@@ -117,7 +118,7 @@ function layoutBoats() {
 
                                         document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.type = boatsObj[i].type;
                                         document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.status = "occupied";
-                                        console.log("vertical carrier")
+                                        // console.log("vertical carrier")
                                         //carrierSuccess = carrierSuccess++;
                                     }
 
@@ -131,7 +132,7 @@ function layoutBoats() {
                         carrierSuccess = carrierSuccess + 1;
                     });
 
-                    console.log("carrierSuccess: " + carrierSuccess);
+                    // console.log("carrierSuccess: " + carrierSuccess);
                     if (carrierSuccess !== 5) {
                         [].forEach.call(document.querySelectorAll("#computerBoard li[data-type='Carrier']"), (e) => {
                             e.removeAttribute("data-type");
@@ -153,21 +154,21 @@ function layoutBoats() {
 
 
                         let BattleshipDirection = Math.floor(Math.random() * (2 - 0) + 0);
-                        console.log("direction[BattleshipDirection]: " + direction[BattleshipDirection]);
+                        // console.log ("direction[BattleshipDirection]: " + direction[BattleshipDirection]);
                         if (direction[BattleshipDirection] === "horizontal") {
                             for (let j = 1; j < 5; j++) {
                                 if (document.querySelector("#computerBoard li[data-value='" + columns[column - 4] + rows[row] + "'][data-status='empty']")) {
 
                                     document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.type = boatsObj[i].type;
                                     document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.status = "occupied";
-                                    console.log("horizontal Battleship")
+                                    //  console.log("horizontal Battleship")
                                     //  battleshipSuccess = battleshipSuccess++;
                                 } else {
                                     if (document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "'][data-status='empty']")) {
 
                                         document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.type = boatsObj[i].type;
                                         document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.status = "occupied";
-                                        console.log("vertical Battleship")
+                                        // console.log("vertical Battleship")
                                         // battleshipSuccess = battleshipSuccess++;
                                     }
 
@@ -182,14 +183,14 @@ function layoutBoats() {
 
                                     document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - j] + "']").dataset.type = boatsObj[i].type;
                                     document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - j] + "']").dataset.status = "occupied";
-                                    console.log("vertical Battleship 1");
+                                    //  console.log("vertical Battleship 1");
                                     //   battleshipSuccess = battleshipSuccess + 1;
                                 } else {
                                     if (document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "'][data-status='empty']")) {
 
                                         document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.type = boatsObj[i].type;
                                         document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.status = "occupied";
-                                        console.log("vertical Battleship 2");
+                                        //  console.log("vertical Battleship 2");
                                         //  battleshipSuccess = battleshipSuccess + 1;
                                     }
 
@@ -206,7 +207,7 @@ function layoutBoats() {
                     });
 
 
-                    console.log("how many battleshipe squares: " + battleshipSuccess);
+                    //   console.log("how many battleshipe squares: " + battleshipSuccess);
                     if (battleshipSuccess !== 4) {
                         [].forEach.call(document.querySelectorAll("#computerBoard li[data-type='Battleship']"), (e) => {
                             e.removeAttribute("data-type");
@@ -262,7 +263,7 @@ function layoutBoats() {
                     });
 
 
-                    console.log("how many Cruiser squares: " + cruiserSuccess);
+                    //  console.log("how many Cruiser squares: " + cruiserSuccess);
                     if (cruiserSuccess !== 3) {
                         [].forEach.call(document.querySelectorAll("#computerBoard li[data-type='Cruiser']"), (e) => {
                             e.removeAttribute("data-type");
@@ -278,7 +279,7 @@ function layoutBoats() {
                     function runSubmarine() {
                         submarineSuccess = 0;
                         let SubmarineDirection = Math.floor(Math.random() * (2 - 0) + 0);
-                        console.log("direction[SubmarineDirection]: " + direction[SubmarineDirection]);
+                        //  console.log("direction[SubmarineDirection]: " + direction[SubmarineDirection]);
                         if (direction[SubmarineDirection] === "horizontal") {
                             for (let j = 1; j < 4; j++) {
                                 if (document.querySelector("#computerBoard li[data-value='" + columns[column - 3] + rows[row] + "'][data-status='empty']")) {
@@ -319,7 +320,7 @@ function layoutBoats() {
                     });
 
 
-                    console.log("how many Submarine squares: " + submarineSuccess);
+                    // console.log("how many Submarine squares: " + submarineSuccess);
                     if (submarineSuccess !== 3) {
                         [].forEach.call(document.querySelectorAll("#computerBoard li[data-type='Submarine']"), (e) => {
                             e.removeAttribute("data-type");
@@ -334,7 +335,7 @@ function layoutBoats() {
                     function runDestroyer() {
                         destroyerSuccess = 0;
                         let DestroyerDirection = Math.floor(Math.random() * (2 - 0) + 0);
-                        console.log("direction[DestroyerDirection]: " + direction[DestroyerDirection]);
+                        // console.log("direction[DestroyerDirection]: " + direction[DestroyerDirection]);
                         if (direction[DestroyerDirection] === "horizontal") {
                             for (let j = 1; j < 3; j++) {
                                 if (document.querySelector("#computerBoard li[data-value='" + columns[column - 2] + rows[row] + "'][data-status='empty']")) {
@@ -369,7 +370,7 @@ function layoutBoats() {
                     });
 
 
-                    console.log("how many Destroyer squares: " + destroyerSuccess);
+                    // console.log("how many Destroyer squares: " + destroyerSuccess);
                     if (destroyerSuccess !== 3) {
                         [].forEach.call(document.querySelectorAll("#computerBoard li[data-type='Destroyer']"), (e) => {
                             e.removeAttribute("data-type");
@@ -382,23 +383,35 @@ function layoutBoats() {
             }
         }
     }
+
+
+    let boatLengths = [document.querySelectorAll("[data-type='Carrier']").length,
+    document.querySelectorAll("[data-type='Battleship']").length,
+    document.querySelectorAll("[data-type='Cruiser']").length,
+    document.querySelectorAll("[data-type='Submarine']").length,
+    document.querySelectorAll("[data-type='Destroyer']").length];
+
+    for (let i = 0; i < boatLengths.length; i++) {
+        console.log("Boat: " + boatsObj[i].type + " - has this many: " + boatLengths[i]);
+        boatTotal = boatTotal + boatLengths[i];
+    }
+
+    if (boatTotal !== 17) {
+        console.log("Boat total: " + boatTotal);
+        [].forEach.call(document.querySelectorAll("[data-type]"), (e) => {
+            e.removeAttribute("data-type");
+            e.dataset.status = "empty";
+        });
+        console.log("run layoutBoats() again!");
+        boatTotal = 0;
+        layoutBoats();
+    }
 }
 
 
 layoutBoats();
 
-if (document.querySelectorAll("[data-type='Carrier']").length !== 5 &&
-    document.querySelectorAll("[data-type='Battleship']").length !== 4 &&
-    document.querySelectorAll("[data-type='Cruiser']").length !== 3 &&
-    document.querySelectorAll("[data-type='Submarine']").length !== 3 &&
-    document.querySelectorAll("[data-type='Destroyer']").length !== 2) {
-    [].forEach.call(document.querySelectorAll("[data-type]"), (e) => {
-        e.removeAttribute("data-type");
-        e.dataset.status = "empty";
-    });
-    console.log("run layoutBoats() again!");
-    layoutBoats();
-}
+
 
 /*
 
