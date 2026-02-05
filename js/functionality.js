@@ -78,7 +78,7 @@ function layoutBoats() {
     let = boatListHTML = "";
     for (let i = 0; i < boatsObj.length; i++) {
 
-        boatListHTML = boatListHTML + `<li><button class='btn btn-secondary btn-block' data-boat="${boatsObj[i].type}" onClick="selectBoat('${boatsObj[i].type}')" >${boatsObj[i].type}</button></li>`;
+        boatListHTML = boatListHTML + `<li><button class='btn btn-secondary btn-block' data-boat="${boatsObj[i].type}" data-count="${boatsObj[i].count}" onClick="selectBoat('${boatsObj[i].type}')" >${boatsObj[i].type}</button></li>`;
 
 
         let row;
@@ -457,7 +457,107 @@ function selectBoat(whichBoat) {
 
 
 function placeBoat() {
+    document.getElementById("errorMessage").innerHTML = "";
+    let direction = document.querySelector("select[name='direction']").value;
+    let row = document.querySelector("select[name='rows']").value;
+    let column = document.querySelector("select[name='columns']").value;
+    let activeBoat = document.querySelector("#userBoats button.active[data-boat]").dataset.boat;
+    let activeSize = document.querySelector("#userBoats button.active[data-boat]").dataset.count;
 
+
+
+    document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.add("alert-success");
+
+    if (direction === "down") {
+        for (let i = 0; i < activeSize; i++) {
+            if (document.querySelector("#playerBoard li[data-value='" + row + (column + i) + "']")) {
+                document.querySelector("#playerBoard li[data-value='" + row + (column + i) + "']").classList.add("alert-success");
+                document.querySelector("#playerBoard li[data-value='" + row + (column + i) + "']").dataset.status = activeBoat;
+            } else {
+
+                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Pleas try again.";
+                document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
+                [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
+                    e.dataset.status = "empty";
+                    e.classList.remove("alert-success");
+
+                })
+
+            }
+
+        }
+    }
+
+    if (direction === "up") {
+        for (let i = 0; i < activeSize; i++) {
+            if (document.querySelector("#playerBoard li[data-value='" + row + (column - i) + "']")) {
+                document.querySelector("#playerBoard li[data-value='" + row + (column - i) + "']").classList.add("alert-success");
+                document.querySelector("#playerBoard li[data-value='" + row + (column - i) + "']").dataset.status = activeBoat;
+            } else {
+
+                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Pleas try again.";
+                document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
+                [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
+                    e.dataset.status = "empty";
+                    e.classList.remove("alert-success");
+
+                })
+
+            }
+
+        }
+    }
+
+    if (direction === "right") {
+        for (let i = 0; i < activeSize; i++) {
+            if (document.querySelector("#playerBoard li[data-value='" + row + column + "']")) {
+                let start = xaxis.indexOf(row);
+
+                console.log("start: " + start)
+                console.log("xaxis[row + i] + column: " + xaxis[start + i] + column);
+                document.querySelector("#playerBoard li[data-value='" + xaxis[start + i] + column + "']").classList.add("alert-success");
+                document.querySelector("#playerBoard li[data-value='" + xaxis[start + i] + column + "']").dataset.status = activeBoat;
+            } else {
+
+                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Pleas try again.";
+                document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
+                [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
+                    e.dataset.status = "empty";
+                    e.classList.remove("alert-success");
+
+                })
+
+            }
+
+        }
+    }
+
+
+
+
+    if (direction === "left") {
+        for (let i = 0; i < activeSize; i++) {
+            if (document.querySelector("#playerBoard li[data-value='" + row + column + "']")) {
+                let start = xaxis.indexOf(row);
+
+                console.log("start: " + start)
+                console.log("xaxis[row + i] + column: " + xaxis[start + i] + column);
+                document.querySelector("#playerBoard li[data-value='" + xaxis[start - i] + column + "']").classList.add("alert-success");
+                document.querySelector("#playerBoard li[data-value='" + xaxis[start - i] + column + "']").dataset.status = activeBoat;
+            } else {
+
+                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Pleas try again.";
+                document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
+                [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
+                    e.dataset.status = "empty";
+                    e.classList.remove("alert-success");
+
+                })
+
+            }
+
+        }
+    }
 
 
 }
