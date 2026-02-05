@@ -32,3 +32,7 @@ ul.list-unstyled.inline li:hover {
     --bs-alert-border-color: var(--bs-primary-border-subtle);
     --bs-alert-link-color: var(--bs-primary-text-emphasis);
 }
+
+.hide {
+    display: none !important;
+}

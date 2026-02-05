@@ -578,4 +578,12 @@ function placeBoat() {
 
     }
 
+    if (!document.querySelector("#userBoats button[data-boat]")) {
+
+        document.getElementById("placementPanel").classList.add("hide");
+        document.getElementById("gamePanel").classList.remove("hide");
+        /*  <div id="gamePanel" class="hide"><h1>Hunt down the enemy!</h1></div>
+  <div id="placementPanel"></div>*/
+    }
+
 }
