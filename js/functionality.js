@@ -30,6 +30,41 @@ for (let a = 0; a < boards.length; a++) {
     }
 }
 
+
+
+let hunting = true;
+function hunt(startpoint) {
+
+    console.log("(typeof startpoint): " + (typeof startpoint));
+    console.log("startpoint: " + startpoint + " - startpoint.length; " + startpoint.length);
+    startpoint = startpoint.toString();
+
+    let xPosition = startpoint[0];
+    let yPosition = startpoint[1];/**/
+    yPosition = Number(yPosition);
+
+    /* if (startpoint && startpoint.length >= 2) {
+         // Return the character at the second index (index 1 in zero-based indexing).
+         yPosition = startpoint[1];
+         console.log("startpoint[1]: " + startpoint[1]);
+     } else {
+         // Return undefined or a default value if there are fewer than two numbers.
+         console.log("undefined: " + undefined);
+     }
+ 
+     /*
+     const xaxis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+     const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+     
+     */
+
+    console.log("xPosition: " + xPosition + " xaxis.indeOf(xPosition): " + xaxis.indexOf(xPosition));
+    console.log("yPosition: " + yPosition + " yaxis.indeOf(yPosition): " + yaxis.indexOf(yPosition));
+}
+
+
+
+
 function selectSq(cell) {
     console.log("cell: " + cell);
 
@@ -39,6 +74,7 @@ function selectSq(cell) {
     } else {
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status = "hit";
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").classList.add("alert-danger");
+        hunt(cell);
     }
 
     if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
@@ -62,8 +98,6 @@ function selectSq(cell) {
 
 
 
-
-
     function aiSelect() {
         let thisCall = generate();
 
@@ -75,6 +109,7 @@ function selectSq(cell) {
             } else {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
+                hunt(thisCall);
             }
             alreadyCalled.push();
 
