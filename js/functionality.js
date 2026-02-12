@@ -32,7 +32,7 @@ for (let a = 0; a < boards.length; a++) {
 
 
 
-let hunting = true;
+let hunting = false;
 function hunt(startpoint) {
 
     console.log("(typeof startpoint): " + (typeof startpoint));
@@ -57,9 +57,23 @@ function hunt(startpoint) {
      const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
      
      */
+    let targetArr = [];
+
+
+    function buildTargetArr(xPosition, yPosition) {
+
+        targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
+        targetArr.push(xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
+        targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+        targetArr.push(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
+
+
+    };
 
     console.log("xPosition: " + xPosition + " xaxis.indeOf(xPosition): " + xaxis.indexOf(xPosition));
     console.log("yPosition: " + yPosition + " yaxis.indeOf(yPosition): " + yaxis.indexOf(yPosition));
+    buildTargetArr(xPosition, yPosition);
+    console.log("targetArr: " + targetArr);
 }
 
 
@@ -101,21 +115,43 @@ function selectSq(cell) {
     function aiSelect() {
         let thisCall = generate();
 
-        if (alreadyCalled.indexOf(thisCall) == -1) {
-            console.log("thisCall: " + thisCall);
-            //  console.log("status: " + document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status)
+        console.log("AI's turn to play! hunting: " + hunting);
+
+        if (hunting) {
+
+            thisCall = targetArr[0];
+
             if (document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
             } else {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
-                hunt(thisCall);
+                hunting = true;
+
             }
-            alreadyCalled.push();
+
+            targetArr = targetArr.substring(1);
+            console.log("targetArr from AI: " + targetArr);
+
 
         } else {
-            aiSelect();
+            if (alreadyCalled.indexOf(thisCall) == -1) {
+                console.log("thisCall from line 38: " + thisCall);
+                //  console.log("status: " + document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status)
+                if (document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
+                    document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
+                } else {
+                    document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
+                    document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
+
+                    hunt(thisCall);
+                }
+                alreadyCalled.push(thisCall);
+
+            }
         }
+
+
     }
     console.log("alreadyCalled: " + alreadyCalled);
     aiSelect();
