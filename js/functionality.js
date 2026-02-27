@@ -1,6 +1,8 @@
 const xaxis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 let boards = ["playerBoard", "computerBoard"];
+let targetArr = [];
+let alreadyCalled = [];
 let rowsHTML = "";
 let columnsHTML = "";
 for (let i = 0; i < xaxis.length; i++) {
@@ -33,6 +35,29 @@ for (let a = 0; a < boards.length; a++) {
 
 
 let hunting = false;
+
+
+
+function buildTargetArr(xPosition, yPosition) {
+    targetArr = [];
+    if (xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)] !== undefined) {
+        targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
+    }
+    if (xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)] !== undefined) {
+        targetArr.push(xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
+    }
+    if (xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)] !== undefined) {
+        targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+    }
+    if (xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition) !== undefined]) {
+        targetArr.push(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
+    }
+
+
+
+};
+
+
 function hunt(startpoint) {
 
     console.log("(typeof startpoint): " + (typeof startpoint));
@@ -57,30 +82,14 @@ function hunt(startpoint) {
      const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
      
      */
-    let targetArr = [];
 
-
-    function buildTargetArr(xPosition, yPosition) {
-        if (xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)] !== undefined) {
-            targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
-        }
-        if (xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)] !== undefined) {
-            targetArr.push(xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
-        }
-        if (xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)] !== undefined) {
-            targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
-        }
-        if (xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition) !== undefined]) {
-            targetArr.push(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
-        }
-
-
-
-    };
 
     console.log("xPosition: " + xPosition + " xaxis.indeOf(xPosition): " + xaxis.indexOf(xPosition));
     console.log("yPosition: " + yPosition + " yaxis.indeOf(yPosition): " + yaxis.indexOf(yPosition));
-    buildTargetArr(xPosition, yPosition);
+    if (targetArr.length <= 0) {
+        buildTargetArr(xPosition, yPosition);
+    }
+
     console.log("targetArr: " + targetArr);
 }
 
@@ -109,7 +118,7 @@ function selectSq(cell) {
 
 
     /***the computer's turn */
-    let alreadyCalled = [];
+
     function generate() {
         let row;
         let column;
@@ -121,25 +130,44 @@ function selectSq(cell) {
 
 
     function aiSelect() {
-        let thisCall = generate();
+        let thisCall = [];
 
-        console.log("AI's turn to play! hunting: " + hunting);
+        if (targetArr.length <= 0) {
+            thisCall = generate();
+        } else {
+            thisCall = targetArr[0]
+        }
 
-        if (hunting) {
 
-            thisCall = targetArr[0];
+
+        if (targetArr.length <= 0) {
+
+
 
             if (document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
+                hunting = false;
             } else {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
                 hunting = true;
+                console.log("thisCall: " + thisCall + "  thisCall.length; " + thisCall.length);
+                buildTargetArr(thisCall[0], thisCall[1]);
+
+            }
+            console.log("AI's turn to play! hunting: " + hunting + " - targetArr: " + targetArr);
+            /* targetArr = targetArr.substring(1);
+             console.log("targetArr from AI: " + targetArr);*/
+
+            let tempTargetArr = [];
+            for (let i = 0; i < targetArr.length; i++) {
+                if (i !== 0) {
+                    tempTargetArr.push(targetArr[i]);
+                }
 
             }
 
-            targetArr = targetArr.substring(1);
-            console.log("targetArr from AI: " + targetArr);
+            targetArr = tempTargetArr;
 
 
         } else {
@@ -160,11 +188,12 @@ function selectSq(cell) {
         }
 
 
+
     }
     console.log("alreadyCalled: " + alreadyCalled);
     aiSelect();
 
-
+    console.log("alreadyCalled: " + alreadyCalled + " - targetArr: " + targetArr);
 
 };
 
