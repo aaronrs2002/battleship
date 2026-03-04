@@ -50,7 +50,7 @@ for (let a = 0; a < boards.length; a++) {
     for (let j = 0; j < xaxis.length; j++) {
         gridLayout = gridLayout + ` <ul class="list-unstyled inlineColumns"><li> <h2 class="text-capitalize text-center pt-2">${xaxis[j]}</h2></li>`;
         for (let i = 0; i < yaxis.length; i++) {
-            gridLayout = gridLayout + `<li class='alert'  data-value='${xaxis[j] + yaxis[i]}' onClick="selectSq('${xaxis[j] + yaxis[i]}')" data-status="empty">${xaxis[j] + yaxis[i]} </li>`;
+            gridLayout = gridLayout + `<li class='alert'  data-value='${xaxis[j] + yaxis[i]}'  onClick = "selectSq('${xaxis[j] + yaxis[i]}',${boards[a]})"} data-status="empty">${xaxis[j] + yaxis[i]} </li>`;
         }
         gridLayout = gridLayout + "</ul>";
     }
@@ -71,6 +71,7 @@ let hunting = false;
 
 
 function buildTargetArr(xPosition, yPosition) {
+    console.log("we got to buildTargetArr(): " + xPosition, yPosition);
     yPosition = Number(yPosition);
     targetArr = [];
     if (xaxis[xaxis.indexOf(xPosition)] !== undefined && yaxis[yaxis.indexOf(yPosition + 1)] !== undefined) {
@@ -86,7 +87,7 @@ function buildTargetArr(xPosition, yPosition) {
         targetArr.push(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
     }
 
-
+    console.log("targetArr from  buildTargetArr(): " + targetArr);
 
 };
 
@@ -119,7 +120,8 @@ function hunt(startpoint) {
 
     console.log("xPosition: " + xPosition + " xaxis.indeOf(xPosition): " + xaxis.indexOf(xPosition));
     console.log("yPosition: " + yPosition + " yaxis.indeOf(yPosition): " + yaxis.indexOf(yPosition));
-    if (targetArr.length <= 0) {
+    if (targetArr.length === 0) {
+        console.log("we got to hunt()");
         buildTargetArr(xPosition, yPosition);
     }
 
@@ -129,7 +131,8 @@ function hunt(startpoint) {
 
 
 
-function selectSq(cell) {
+function selectSq(cell, player) {
+
     console.log("cell: " + cell);
 
     console.log("status: " + document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status)
@@ -138,7 +141,13 @@ function selectSq(cell) {
     } else {
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status = "hit";
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").classList.add("alert-danger");
-        hunt(cell);
+        if (player === "playerBoard") {
+            hunt(cell);
+            console.log("fired hunt()")
+        } else {
+            console.log("player: " + player)
+        }
+
     }
 
     if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
@@ -191,12 +200,13 @@ function selectSq(cell) {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
                 hunting = false;
             } else {
+                targetArr = [];
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
                 hunting = true;
                 console.log("thisCall: " + thisCall + "  thisCall.length; " + thisCall.length);
 
-                buildTargetArr(thisCall[0], (thisCall.length === 2 ? thisCall[1] + thisCall[2] : thisCall[1]))
+                buildTargetArr(thisCall[0], thisCall.substring(1))
 
                 console.log("AI's turn to play! hunting: " + hunting + " - targetArr: " + targetArr);
                 /* targetArr = targetArr.substring(1);
@@ -211,7 +221,7 @@ function selectSq(cell) {
 
 
 
-                targetArr = [];
+
 
 
             }
