@@ -76,15 +76,29 @@ function buildTargetArr(xPosition, yPosition) {
     targetArr = [];
     if (xaxis[xaxis.indexOf(xPosition)] !== undefined && yaxis[yaxis.indexOf(yPosition + 1)] !== undefined) {
         targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
+        console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
+    } else {
+        console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
     }
     if (xaxis[xaxis.indexOf(xPosition) + 1] !== undefined && yaxis[yaxis.indexOf(yPosition)] !== undefined) {
         targetArr.push(xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
+        console.log("pushed " + xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
+    } else {
+        console.log("did not push " + xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
     }
+
     if (xaxis[xaxis.indexOf(xPosition)] !== undefined && yaxis[yaxis.indexOf(yPosition - 1)] !== undefined) {
         targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+        console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+    } else {
+        console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
     }
-    if (xaxis[xaxis.indexOf(xPosition) - 1] !== undefined && yaxis[yaxis.indexOf(yPosition) !== undefined]) {
+
+    if (xaxis[xaxis.indexOf(xPosition - 1)] !== undefined && yaxis[yaxis.indexOf(yPosition) !== undefined]) {
         targetArr.push(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
+        console.log("pushed " + xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
+    } else {
+        console.log("did not push " + xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
     }
 
     console.log("targetArr from  buildTargetArr(): " + targetArr);
@@ -237,6 +251,7 @@ function selectSq(cell, player) {
                 } else {
                     document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
                     document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
+                    document.querySelector("#playerBoard li[data-value='" + thisCall + "']").classList.remove("target");
 
                     hunt(thisCall);
                 }
