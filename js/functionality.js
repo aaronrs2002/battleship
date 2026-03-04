@@ -1,3 +1,35 @@
+const columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+const rows = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+const direction = ["horizontal", "vertical"];
+let boatTotal = 0;
+
+const boatsObj = [{
+    type: "Carrier", count: 5
+},
+{
+    type: "Battleship", count: 4
+},
+{
+    type: "Cruiser", count: 3
+},
+{
+    type: "Submarine", count: 3
+},
+{
+    type: "Destroyer", count: 2
+},
+];
+
+
+
+let rowsUsed = [];
+let columnsUsed = [];
+
+
+let waitForNextTurn = false;
+
+
+
 const xaxis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 let boards = ["playerBoard", "computerBoard"];
@@ -39,17 +71,18 @@ let hunting = false;
 
 
 function buildTargetArr(xPosition, yPosition) {
+    yPosition = Number(yPosition);
     targetArr = [];
-    if (xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)] !== undefined) {
+    if (xaxis[xaxis.indexOf(xPosition)] !== undefined && yaxis[yaxis.indexOf(yPosition + 1)] !== undefined) {
         targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
     }
-    if (xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)] !== undefined) {
+    if (xaxis[xaxis.indexOf(xPosition) + 1] !== undefined && yaxis[yaxis.indexOf(yPosition)] !== undefined) {
         targetArr.push(xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
     }
-    if (xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)] !== undefined) {
+    if (xaxis[xaxis.indexOf(xPosition)] !== undefined && yaxis[yaxis.indexOf(yPosition - 1)] !== undefined) {
         targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
     }
-    if (xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition) !== undefined]) {
+    if (xaxis[xaxis.indexOf(xPosition) - 1] !== undefined && yaxis[yaxis.indexOf(yPosition) !== undefined]) {
         targetArr.push(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
     }
 
@@ -124,20 +157,30 @@ function selectSq(cell) {
         let column;
         column = yaxis[Math.floor(Math.random() * (10 - 0) + 0)];
         row = xaxis[Math.floor(Math.random() * (10 - 0) + 0)];
+        console.log("row + column: " + row + column);
         return row + column;
     }
 
 
 
     function aiSelect() {
-        let thisCall = [];
+        let thisCall;
 
-        if (targetArr.length <= 0) {
+        if (!document.querySelector("#playerBoard .target[data-value]")) {
             thisCall = generate();
+            console.log("generate() " + thisCall);
         } else {
-            thisCall = targetArr[0]
-        }
+            [].forEach.call(document.querySelectorAll("#playerBoard .target[data-value]"), (e, i) => {
 
+                if (i === 0) {
+                    thisCall = e.dataset.value;
+                }
+            });
+
+        }
+        console.log(
+            "this call: " + thisCall
+        );
 
 
         if (targetArr.length <= 0) {
@@ -152,24 +195,29 @@ function selectSq(cell) {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
                 hunting = true;
                 console.log("thisCall: " + thisCall + "  thisCall.length; " + thisCall.length);
-                buildTargetArr(thisCall[0], thisCall[1]);
 
-            }
-            console.log("AI's turn to play! hunting: " + hunting + " - targetArr: " + targetArr);
-            /* targetArr = targetArr.substring(1);
-             console.log("targetArr from AI: " + targetArr);*/
+                buildTargetArr(thisCall[0], (thisCall.length === 2 ? thisCall[1] + thisCall[2] : thisCall[1]))
 
-            let tempTargetArr = [];
-            for (let i = 0; i < targetArr.length; i++) {
-                if (i !== 0) {
-                    tempTargetArr.push(targetArr[i]);
+                console.log("AI's turn to play! hunting: " + hunting + " - targetArr: " + targetArr);
+                /* targetArr = targetArr.substring(1);
+                 console.log("targetArr from AI: " + targetArr);*/
+
+
+
+                for (let i = 0; i < targetArr.length; i++) {
+                    document.querySelector("#playerBoard li[data-value='" + targetArr[i] + "']").classList.add("target");
                 }
 
+
+
+
+                targetArr = [];
+
+
             }
 
-            targetArr = tempTargetArr;
 
-
+            console.log("alreadyCalled: " + alreadyCalled + " - targetArr: " + targetArr);
         } else {
             if (alreadyCalled.indexOf(thisCall) == -1) {
                 console.log("thisCall from line 38: " + thisCall);
@@ -193,7 +241,7 @@ function selectSq(cell) {
     console.log("alreadyCalled: " + alreadyCalled);
     aiSelect();
 
-    console.log("alreadyCalled: " + alreadyCalled + " - targetArr: " + targetArr);
+
 
 };
 
@@ -220,32 +268,7 @@ No.	Class of ship	Size
 */
 
 
-const columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-const rows = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-const direction = ["horizontal", "vertical"];
-let boatTotal = 0;
 
-const boatsObj = [{
-    type: "Carrier", count: 5
-},
-{
-    type: "Battleship", count: 4
-},
-{
-    type: "Cruiser", count: 3
-},
-{
-    type: "Submarine", count: 3
-},
-{
-    type: "Destroyer", count: 2
-},
-];
-
-
-
-let rowsUsed = [];
-let columnsUsed = [];
 
 function layoutBoats() {
     let = boatListHTML = "";
