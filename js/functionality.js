@@ -93,10 +93,11 @@ function buildTargetArr(xPosition, yPosition) {
     } else {
         console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
     }
+    console.log("xaxis[xaxis.indexOf(xPosition) - 1]: " + xaxis[xaxis.indexOf(xPosition) - 1] + "  - yaxis[yaxis.indexOf(yPosition)]: " + yaxis[yaxis.indexOf(yPosition)]);
 
-    if (xaxis[xaxis.indexOf(xPosition - 1)] !== undefined && yaxis[yaxis.indexOf(yPosition) !== undefined]) {
+    if (xaxis[xaxis.indexOf(xPosition) - 1] && yaxis[yaxis.indexOf(yPosition)]) {
         targetArr.push(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
-        console.log("pushed " + xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
+        console.log("pushed " + xaxis[xaxis.indexOf(xPosition - 1)] + yaxis[yaxis.indexOf(yPosition)]);
     } else {
         console.log("did not push " + xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
     }
@@ -192,6 +193,7 @@ function selectSq(cell, player) {
         if (!document.querySelector("#playerBoard .target[data-value]")) {
             thisCall = generate();
             console.log("generate() " + thisCall);
+            targetArr = [];
         } else {
             [].forEach.call(document.querySelectorAll("#playerBoard .target[data-value]"), (e, i) => {
 
@@ -229,7 +231,10 @@ function selectSq(cell, player) {
 
 
                 for (let i = 0; i < targetArr.length; i++) {
-                    document.querySelector("#playerBoard li[data-value='" + targetArr[i] + "']").classList.add("target");
+                    if (document.querySelector("#playerBoard li[data-value='" + targetArr[i] + "']")) {
+                        document.querySelector("#playerBoard li[data-value='" + targetArr[i] + "']").classList.add("target");
+                    }
+
                 }
 
 
