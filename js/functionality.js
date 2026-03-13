@@ -2,7 +2,7 @@ const columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const rows = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 const direction = ["horizontal", "vertical"];
 let boatTotal = 0;
-
+let anchorHit;
 const boatsObj = [{
     type: "Carrier", count: 5
 },
@@ -70,51 +70,145 @@ let hunting = false;
 
 
 
-function buildTargetArr(xPosition, yPosition) {
-    console.log("we got to buildTargetArr(): " + xPosition, yPosition);
+function buildTargetArr(xPosition, yPosition, direction) {
+    console.log("we got to buildTargetArr(): " + xPosition, yPosition + " - direction: " + direction);
     yPosition = Number(yPosition);
-    targetArr = [];
-    if (xaxis[xaxis.indexOf(xPosition)] !== undefined && yaxis[yaxis.indexOf(yPosition + 1)] !== undefined) {
-        targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
-        console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
-    } else {
-        console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
-    }
-    if (xaxis[xaxis.indexOf(xPosition) + 1] !== undefined && yaxis[yaxis.indexOf(yPosition)] !== undefined) {
-        targetArr.push(xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
-        console.log("pushed " + xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
-    } else {
-        console.log("did not push " + xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
+    // targetArr = [];
+    if (direction === "circle") {
+
+        if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + 1)]) {
+            if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]) === -1) {
+
+                targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
+                console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
+            }
+
+        } else {
+            console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
+        }
+        if (xaxis[xaxis.indexOf(xPosition) + 1] && yaxis[yaxis.indexOf(yPosition)]) {
+            if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
+                targetArr.push(xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
+                console.log("pushed " + xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
+            }
+
+        } else {
+            console.log("did not push " + xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
+        }
+
+        if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - 1)]) {
+            if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - 1)]) === -1) {
+                targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+                console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+            }
+
+        } else {
+            console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+        }
+        console.log("xaxis[xaxis.indexOf(xPosition) - 1]: " + xaxis[xaxis.indexOf(xPosition) - 1] + "  - yaxis[yaxis.indexOf(yPosition)]: " + yaxis[yaxis.indexOf(yPosition)]);
+
+        if (xaxis[xaxis.indexOf(xPosition) - 1] && yaxis[yaxis.indexOf(yPosition)]) {
+            if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
+                targetArr.push(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
+                console.log("pushed " + xaxis[xaxis.indexOf(xPosition - 1)] + yaxis[yaxis.indexOf(yPosition)]);
+            }
+
+        } else {
+            console.log("did not push " + xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
+        }
+
     }
 
-    if (xaxis[xaxis.indexOf(xPosition)] !== undefined && yaxis[yaxis.indexOf(yPosition - 1)] !== undefined) {
-        targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
-        console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
-    } else {
-        console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
-    }
-    console.log("xaxis[xaxis.indexOf(xPosition) - 1]: " + xaxis[xaxis.indexOf(xPosition) - 1] + "  - yaxis[yaxis.indexOf(yPosition)]: " + yaxis[yaxis.indexOf(yPosition)]);
+    if (direction === "runXY") {
 
-    if (xaxis[xaxis.indexOf(xPosition) - 1] && yaxis[yaxis.indexOf(yPosition)]) {
-        targetArr.push(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
-        console.log("pushed " + xaxis[xaxis.indexOf(xPosition - 1)] + yaxis[yaxis.indexOf(yPosition)]);
-    } else {
-        console.log("did not push " + xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
+
+
+        for (let i = 1; i < 6; i++) {
+            if (xaxis[xaxis.indexOf(xPosition + i)] && yaxis[yaxis.indexOf(yPosition)]) {
+                if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
+
+                    targetArr.push(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]);
+                    document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)] + "]").classList.add("target");
+                    console.log("pushed " + xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]);
+                }
+
+            }
+
+            if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + i)]) {
+                if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition - i)] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
+                    document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)] + "]").classList.add("target");
+                    targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]);
+                    console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]);
+                }
+
+            }
+            if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + i)]) {
+                if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]) === -1) {
+                    document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)] + "]").classList.add("target");
+                    targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]);
+                    console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]);
+                }
+
+            }
+            if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) {
+                if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]) === -1) {
+                    targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+                    document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)] + "]").classList.add("target");
+                    console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]);
+                }
+
+            }
+        }
+
+
+
+
     }
 
-    console.log("targetArr from  buildTargetArr(): " + targetArr);
+    if ((typeof direction) === "number") {
+
+        if (alreadyCalled.indexOf(anchorHit) > targetArr.indexOf(anchorHit)) {
+
+
+        }
+
+        /*
+targetArr.indexOf(0) - up
+targetArr.indexOf(1) - right
+targetArr.indexOf(2) - down
+targetArr.indexOf(3) - left
+
+        */
+        console.log("Anchor here: " + anchorHit + " - direction: " + direction);
+
+
+
+    }
+    alreadyCalled.push(xPosition + yPosition);
+
+    let tempTargetArr = [];
+    for (let i = 0; i < targetArr.length; i++) {
+        if (alreadyCalled.indexOf(targetArr[i]) === -1) {
+            tempTargetArr.push(targetArr[i]);
+            document.querySelector("#computerBoard  li[data-value='" + targetArr[i] + "']").classList.remove("target");
+        }
+
+    }
+    targetArr = tempTargetArr;
+
+    console.log("targetArr from  buildTargetArr(): " + targetArr + "pushed to already called.");
 
 };
 
 
-function hunt(startpoint) {
+function hunt(startpoint, direction) {
 
     console.log("(typeof startpoint): " + (typeof startpoint));
     console.log("startpoint: " + startpoint + " - startpoint.length; " + startpoint.length);
     startpoint = startpoint.toString();
 
     let xPosition = startpoint[0];
-    let yPosition = startpoint[1];/**/
+    let yPosition = startpoint.substring(1);/**/
     yPosition = Number(yPosition);
 
     /* if (startpoint && startpoint.length >= 2) {
@@ -131,14 +225,17 @@ function hunt(startpoint) {
      const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
      
      */
-
+    if (direction === "runXY") {
+        buildTargetArr(xPosition, yPosition, direction);
+    }
 
     console.log("xPosition: " + xPosition + " xaxis.indeOf(xPosition): " + xaxis.indexOf(xPosition));
     console.log("yPosition: " + yPosition + " yaxis.indeOf(yPosition): " + yaxis.indexOf(yPosition));
     if (targetArr.length === 0) {
         console.log("we got to hunt()");
-        buildTargetArr(xPosition, yPosition);
+        buildTargetArr(xPosition, yPosition, direction);
     }
+
 
     console.log("targetArr: " + targetArr);
 }
@@ -157,7 +254,7 @@ function selectSq(cell, player) {
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status = "hit";
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").classList.add("alert-danger");
         if (player === "playerBoard") {
-            hunt(cell);
+            hunt(cell, "circle");
             console.log("fired hunt()")
         } else {
             console.log("player: " + player)
@@ -181,25 +278,50 @@ function selectSq(cell, player) {
         let column;
         column = yaxis[Math.floor(Math.random() * (10 - 0) + 0)];
         row = xaxis[Math.floor(Math.random() * (10 - 0) + 0)];
-        console.log("row + column: " + row + column);
+
+
         return row + column;
     }
 
 
 
     function aiSelect() {
+
+
+
+
         let thisCall;
 
         if (!document.querySelector("#playerBoard .target[data-value]")) {
-            thisCall = generate();
+
+            while (alreadyCalled.indexOf(thisCall) !== -1) {
+
+                thisCall = generate();
+
+            }
+            alreadyCalled.push(thisCall);
             console.log("generate() " + thisCall);
-            targetArr = [];
+            // targetArr = [];
         } else {
             [].forEach.call(document.querySelectorAll("#playerBoard .target[data-value]"), (e, i) => {
 
                 if (i === 0) {
                     thisCall = e.dataset.value;
+                    e.classList.remove("target");
+                    let tempArr = [];
+                    for (let i = 0; i < targetArr.length; i++) {
+                        if (targetArr[i] !== thisCall) {
+                            tempArr.push(targetArr[i]);
+                        }
+
+                    }
+                    targetArr = tempArr;
+
+
+
                 }
+
+
             });
 
         }
@@ -208,7 +330,7 @@ function selectSq(cell, player) {
         );
 
 
-        if (targetArr.length <= 0) {
+        if (targetArr.length === 0) {
 
 
 
@@ -216,13 +338,13 @@ function selectSq(cell, player) {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
                 hunting = false;
             } else {
-                targetArr = [];
+
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
                 hunting = true;
                 console.log("thisCall: " + thisCall + "  thisCall.length; " + thisCall.length);
 
-                buildTargetArr(thisCall[0], thisCall.substring(1))
+                buildTargetArr(thisCall[0], thisCall.substring(1), "circle")
 
                 console.log("AI's turn to play! hunting: " + hunting + " - targetArr: " + targetArr);
                 /* targetArr = targetArr.substring(1);
@@ -248,21 +370,32 @@ function selectSq(cell, player) {
 
             console.log("alreadyCalled: " + alreadyCalled + " - targetArr: " + targetArr);
         } else {
-            if (alreadyCalled.indexOf(thisCall) == -1) {
-                console.log("thisCall from line 38: " + thisCall);
-                //  console.log("status: " + document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status)
-                if (document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
-                    document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
-                } else {
-                    document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
-                    document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
-                    document.querySelector("#playerBoard li[data-value='" + thisCall + "']").classList.remove("target");
 
-                    hunt(thisCall);
+            console.log("thisCall from line 38: " + thisCall);
+            //  console.log("status: " + document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status)
+            if (document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
+                document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
+            } else {
+                document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
+                document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
+                document.querySelector("#playerBoard li[data-value='" + thisCall + "']").classList.remove("target");
+
+                hunt(thisCall, "runXY");
+                anchorHit = thisCall;
+            }
+
+            let tempArr = [];
+            for (let i = 0; i < targetArr.length; i++) {
+                if (alreadyCalled.indexOf(targetArr[i]) === -1) {
+                    tempArr.push(targetArr[i]);
+                    document.querySelector("#playerBoard li[data-value='" + targetArr[i] + "']").classList.add("target");
                 }
-                alreadyCalled.push(thisCall);
 
             }
+            targetArr = tempArr;
+            console.log("One less targetArr: " + targetArr);
+
+
         }
 
 
