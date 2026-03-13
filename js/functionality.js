@@ -20,16 +20,9 @@ const boatsObj = [{
 },
 ];
 
-
-
 let rowsUsed = [];
 let columnsUsed = [];
-
-
 let waitForNextTurn = false;
-
-
-
 const xaxis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 let boards = ["playerBoard", "computerBoard"];
@@ -64,14 +57,9 @@ for (let a = 0; a < boards.length; a++) {
     }
 }
 
-
-
 let hunting = false;
 
-
-
 function buildTargetArr(xPosition, yPosition, direction) {
-    console.log("we got to buildTargetArr(): " + xPosition, yPosition + " - direction: " + direction);
     yPosition = Number(yPosition);
     // targetArr = [];
     if (direction === "circle") {
@@ -116,13 +104,9 @@ function buildTargetArr(xPosition, yPosition, direction) {
         } else {
             console.log("did not push " + xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
         }
-
     }
 
     if (direction === "runXY") {
-
-
-
         for (let i = 1; i < 6; i++) {
             if (xaxis[xaxis.indexOf(xPosition + i)] && yaxis[yaxis.indexOf(yPosition)]) {
                 if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
@@ -172,15 +156,6 @@ function buildTargetArr(xPosition, yPosition, direction) {
 
         }
 
-        /*
-targetArr.indexOf(0) - up
-targetArr.indexOf(1) - right
-targetArr.indexOf(2) - down
-targetArr.indexOf(3) - left
-
-        */
-        console.log("Anchor here: " + anchorHit + " - direction: " + direction);
-
 
 
     }
@@ -195,61 +170,29 @@ targetArr.indexOf(3) - left
 
     }
     targetArr = tempTargetArr;
-
-    console.log("targetArr from  buildTargetArr(): " + targetArr + "pushed to already called.");
-
 };
 
 
 function hunt(startpoint, direction) {
-
-    console.log("(typeof startpoint): " + (typeof startpoint));
-    console.log("startpoint: " + startpoint + " - startpoint.length; " + startpoint.length);
     startpoint = startpoint.toString();
-
     let xPosition = startpoint[0];
-    let yPosition = startpoint.substring(1);/**/
+    let yPosition = startpoint.substring(1);
     yPosition = Number(yPosition);
 
-    /* if (startpoint && startpoint.length >= 2) {
-         // Return the character at the second index (index 1 in zero-based indexing).
-         yPosition = startpoint[1];
-         console.log("startpoint[1]: " + startpoint[1]);
-     } else {
-         // Return undefined or a default value if there are fewer than two numbers.
-         console.log("undefined: " + undefined);
-     }
- 
-     /*
-     const xaxis = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-     const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-     
-     */
     if (direction === "runXY") {
         buildTargetArr(xPosition, yPosition, direction);
     }
 
-    console.log("xPosition: " + xPosition + " xaxis.indeOf(xPosition): " + xaxis.indexOf(xPosition));
-    console.log("yPosition: " + yPosition + " yaxis.indeOf(yPosition): " + yaxis.indexOf(yPosition));
     if (targetArr.length === 0) {
-        console.log("we got to hunt()");
         buildTargetArr(xPosition, yPosition, direction);
     }
-
-
-    console.log("targetArr: " + targetArr);
 }
 
-
-
-
 function selectSq(cell, player) {
-
     if (document.querySelectorAll("#playerBoard  li[data-status='hit']").length === 17) {
         document.getElementById("placementPanel").classList.remove("hide");
         document.getElementById("gamePanel").classList.add("hide");
         globalAlert("alert-danger", "You lost!");
-
         return false;
     }
 
@@ -261,24 +204,15 @@ function selectSq(cell, player) {
         return false;
     }
 
-
-
-
-    console.log("cell: " + cell);
-
-    console.log("status: " + document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status)
     if (document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status === "empty") {
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").classList.add("alert-info");
     } else {
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status = "hit";
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").classList.add("alert-danger");
+        document.querySelector("#computerBoard  li[data-value='" + cell + "']").classList.remove("alert-success");
         if (player === "playerBoard") {
             hunt(cell, "circle");
-            console.log("fired hunt()")
-        } else {
-            console.log("player: " + player)
         }
-
     }
 
     if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
@@ -286,41 +220,47 @@ function selectSq(cell, player) {
         document.getElementById("gamePanel").classList.add("hide");
         globalAlert("alert-success", "You won!");
         return false;
-
     }
-
-
     /***the computer's turn */
-
     function generate() {
         let row;
         let column;
         column = yaxis[Math.floor(Math.random() * (10 - 0) + 0)];
         row = xaxis[Math.floor(Math.random() * (10 - 0) + 0)];
-
-
         return row + column;
     }
 
 
 
     function aiSelect() {
-
-
-
-
         let thisCall;
 
+
+        let howManyleft = 0;
+        [].forEach.call(document.querySelectorAll("#playerBoard .alert-success[data-value]"), (e) => {
+            howManyleft = (howManyleft + 1);
+        });
+
+
+        if (howManyleft === 6) {
+            [].forEach.call(document.querySelectorAll("#playerBoard li.alert-success[data-value]"), (e) => {
+                targetArr.push(e.dataset.value);
+
+            });
+
+            console.log("we just pushed the last 5 targetArr: " + targetArr);
+        } else {
+            console.log(`howManyleft: ` + howManyleft);
+        }
+
+
+
+
         if (!document.querySelector("#playerBoard .target[data-value]")) {
-
             while (alreadyCalled.indexOf(thisCall) !== -1) {
-
                 thisCall = generate();
-
             }
             alreadyCalled.push(thisCall);
-            console.log("generate() " + thisCall);
-            // targetArr = [];
         } else {
             [].forEach.call(document.querySelectorAll("#playerBoard .target[data-value]"), (e, i) => {
 
@@ -335,24 +275,16 @@ function selectSq(cell, player) {
 
                     }
                     targetArr = tempArr;
-
-
-
                 }
-
-
             });
 
         }
-        console.log(
-            "this call: " + thisCall
-        );
-
+        console.log("this call: " + thisCall);
+        if (!thisCall) {
+            thisCall = generate();
+        }
 
         if (targetArr.length === 0) {
-
-
-
             if (document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
                 hunting = false;
@@ -360,30 +292,15 @@ function selectSq(cell, player) {
 
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
+                document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.remove("alert-success");
                 hunting = true;
-                console.log("thisCall: " + thisCall + "  thisCall.length; " + thisCall.length);
-
                 buildTargetArr(thisCall[0], thisCall.substring(1), "circle")
-
-                console.log("AI's turn to play! hunting: " + hunting + " - targetArr: " + targetArr);
-                /* targetArr = targetArr.substring(1);
-                 console.log("targetArr from AI: " + targetArr);*/
-
-
-
                 for (let i = 0; i < targetArr.length; i++) {
                     if (document.querySelector("#playerBoard li[data-value='" + targetArr[i] + "']")) {
                         document.querySelector("#playerBoard li[data-value='" + targetArr[i] + "']").classList.add("target");
                     }
 
                 }
-
-
-
-
-
-
-
             }
 
 
@@ -397,6 +314,7 @@ function selectSq(cell, player) {
             } else {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
+                document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.remove("alert-success");
                 document.querySelector("#playerBoard li[data-value='" + thisCall + "']").classList.remove("target");
 
                 hunt(thisCall, "runXY");
@@ -427,21 +345,14 @@ function selectSq(cell, player) {
 
 };
 
-
-
 /*
-
 No.	Class of ship	Size
 1	Carrier	5
 2	Battleship	4
 3	Cruiser	3
 4	Submarine	3
 5	Destroyer	2
-
 */
-
-
-
 
 function layoutBoats() {
     let = boatListHTML = "";
@@ -466,7 +377,6 @@ function layoutBoats() {
 
                         let CarrierDirection = Math.floor(Math.random() * (2 - 0) + 0);
                         carrierSuccess = 0;
-                        //   console.log("direction[CarrierDirection]: " + direction[CarrierDirection]);
                         if (direction[CarrierDirection] === "horizontal") {
 
                             for (let j = 1; j < 6; j++) {
@@ -474,16 +384,11 @@ function layoutBoats() {
 
                                     document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.type = boatsObj[i].type;
                                     document.querySelector("#computerBoard li[data-value='" + columns[column - j] + rows[row] + "']").dataset.status = "occupied";
-                                    //  console.log("horizontal Carrier")
-                                    // carrierSuccess = carrierSuccess++;
                                 } else {
-                                    //  console.log("columns[column + j] + rows[row]: " + columns[column + j] + rows[row]);
                                     if (document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "'][data-status='empty']")) {
 
                                         document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.type = boatsObj[i].type;
                                         document.querySelector("#computerBoard li[data-value='" + columns[column + j] + rows[row] + "']").dataset.status = "occupied";
-                                        // console.log("horizontal Carrier")
-                                        // carrierSuccess = carrierSuccess++;
                                     }
 
                                 }
@@ -492,19 +397,13 @@ function layoutBoats() {
                         } else {
                             for (let j = 1; j < 6; j++) {
                                 if (document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - 5] + "'][data-status='empty']")) {
-
                                     document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - j] + "']").dataset.type = boatsObj[i].type;
                                     document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row - j] + "']").dataset.status = "occupied";
-                                    //  console.log("vertical Carrier")
-                                    // carrierSuccess = carrierSuccess++;
                                 } else {
-                                    // console.log("columns[column] + rows[row + j]: " + columns[column] + rows[row + j])
                                     if (document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "'][data-status='empty']")) {
 
                                         document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.type = boatsObj[i].type;
                                         document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.status = "occupied";
-                                        // console.log("vertical carrier")
-                                        //carrierSuccess = carrierSuccess++;
                                     }
 
                                 }
