@@ -134,7 +134,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
 
             }
 
-            if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + i)]) {
+            if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) {
                 if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition - i)] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
                     document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)] + "]").classList.add("target");
                     targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]);
@@ -244,6 +244,25 @@ function hunt(startpoint, direction) {
 
 
 function selectSq(cell, player) {
+
+    if (document.querySelectorAll("#playerBoard  li[data-status='hit']").length === 17) {
+        document.getElementById("placementPanel").classList.remove("hide");
+        document.getElementById("gamePanel").classList.add("hide");
+        globalAlert("alert-danger", "You lost!");
+
+        return false;
+    }
+
+    if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
+        document.getElementById("placementPanel").classList.remove("hide");
+        document.getElementById("gamePanel").classList.add("hide");
+
+        globalAlert("alert-success", "You won!");
+        return false;
+    }
+
+
+
 
     console.log("cell: " + cell);
 
@@ -408,15 +427,6 @@ function selectSq(cell, player) {
 
 };
 
-
-
-if (document.querySelectorAll("#playerBoard  li[data-status='hit']").length === 17) {
-    document.getElementById("placementPanel").classList.remove("hide");
-    document.getElementById("gamePanel").classList.add("hide");
-    globalAlert("alert-success", "You won!");
-
-
-}
 
 
 /*
