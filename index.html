@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="keywords" content="Battleship, play free Battleship, no login, play online" />
+    <meta name="description" content="This is Battleship. It was written in Javascript for a free course online." />
     <title>Battleship</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/brands.css" rel="stylesheet" />
@@ -14,16 +16,70 @@
     <link rel="stylesheet" href="https://aaronrs2002.github.io/black-jack/css/animate.min.css" />
     <link href="https://aaronrs2002.github.io/black-jack/css/shared.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet" />
-
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JJWFFXF8G0"></script>
+    <script>
+        const urlStr = window.location.href;
+        if (urlStr.indexOf("file:///Users/") !== -1 || urlStr.indexOf("exclude") !== -1 || urlStr.indexOf("3000") !== -1) {
+            console.log("Not running GA");
+        } else {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-JJWFFXF8G0');
+        }
+    </script>
 </head>
 
 <body>
-    <h1>Battleship</h1>
-
-
-
 
     <div class="container">
+
+        <!--start top-->
+        <div class="row">
+            <div class="btn-group form-control mb-2  animated fadeInDown" role="group" alt="Play Battleship Online">
+                <button type="button" class="btn btn-primary dealAmt" alt="any" id="betAny"
+                    onClick="toggle('anyAmount');focusOnField('anyAmount');">Any
+                    $</button>
+                <button type="button" class="btn btn-primary dealAmt" alt="5" onClick="deal(Number(5))">$5</button>
+                <button type="button" class="btn btn-primary dealAmt" alt="10" onClick="deal(Number(10))">$10</button>
+                <button type="button" class="btn btn-primary dealAmt" alt="25" onClick="deal(Number(25))">$25</button>
+                <button type="button" class="btn btn-primary dealAmt" alt="50" onClick="deal(Number(50))">$50</button>
+                <button type="button" class="btn btn-primary dealAmt" alt="100"
+                    onClick="deal(Number(100))">$100</button>
+            </div>
+            <div class="col-md-12 hide" data-toggle="anyAmount">
+
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control" name="anyAmount"
+                        placeholder="Any Amount. Numerical characters only please." onKeyUp="updateBetAny()">
+                    <button class="btn btn-primary" onClick="deal('any')">Bet</button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="alert alert-info" role="alert">
+                    <div class="row">
+                        <div class="col-6">
+                            <div>
+                                <h3>Balance: $<span id="playerMoney"></span></h3>
+                                <span class="badge bg-dark text-light"><i id="highScoreTarget"></i></span>
+                            </div>
+                            <div id="lostWon"></div>
+                        </div>
+                        <div class="col-6">
+                            <h3 id="betTarget">Battleship</h3>
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="alert alert-secondary hide" id="playerTotal" role="alert"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--end top-->
         <div class="row">
             <div class="col-md-6">
                 <div id="gamePanel" class="hide">

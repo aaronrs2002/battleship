@@ -19,7 +19,55 @@ const boatsObj = [{
     type: "Destroyer", count: 2
 },
 ];
+let bet = 0;
+let playerMoney = 500;
+if (localStorage.getItem("balance") && Number(localStorage.getItem("balance"))) {
+    playerMoney = Number(localStorage.getItem("balance"));
+}
+document.querySelector("#playerMoney").innerHTML = playerMoney;
 
+
+
+function setPlayerMoney(passPlayerMoney, status, bet) {
+    document.getElementById("playerMoney").innerHTML = passPlayerMoney;
+    document.querySelector("#playerMoney").innerHTML = passPlayerMoney;/*SAFARI BUG NEEDS BOTH*/
+    localStorage.setItem("balance", passPlayerMoney);
+
+
+    if (status.indexOf("win") === 0 || status.indexOf("lose") === 0) {
+        document.getElementById("lostWon").innerHTML = status + " $" + bet + "</label>";
+    } else {
+        status = status.replace("split", ("TOTAL BET: $" + bet))
+        document.getElementById("lostWon").innerHTML = "<label class='text-uppercase'>" + status + "</label>";
+    }
+
+}
+
+/*END DOES NOT RESET AT DEAL*/
+
+
+function showAlert(status, message, type) {
+
+    if (message === "default") {
+        document.getElementById("status").classList.add("hide");
+        document.getElementById("status").classList.remove("alert-danger");
+        document.getElementById("status").classList.remove("alert-success");
+    } else {
+        document.getElementById("message").innerHTML = message;
+        document.getElementById("status").classList.remove("hide");
+        document.getElementById("status").classList.add(type);
+        [].forEach.call(document.querySelectorAll('.dealAmt'), function (e) {
+            e.disabled = false;
+        });
+    }
+
+
+    enableBts();
+    ckHighScore();
+    return false;
+}
+
+/*start battleship code********************************************************************/
 let rowsUsed = [];
 let columnsUsed = [];
 let waitForNextTurn = false;
@@ -242,14 +290,17 @@ function selectSq(cell, player) {
         document.getElementById("placementPanel").classList.remove("hide");
         document.getElementById("gamePanel").classList.add("hide");
         globalAlert("alert-danger", "You lost!");
+        playerMoney = (playerMoney - bet);
+        setPlayerMoney(playerMoney, "lose", bet);
         return false;
     }
 
     if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
         document.getElementById("placementPanel").classList.remove("hide");
         document.getElementById("gamePanel").classList.add("hide");
-
         globalAlert("alert-success", "You won!");
+        playerMoney = (playerMoney - bet);
+        setPlayerMoney(playerMoney, "win", bet);
         return false;
     }
 
@@ -264,12 +315,12 @@ function selectSq(cell, player) {
         }
     }
 
-    if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
-        document.getElementById("placementPanel").classList.remove("hide");
-        document.getElementById("gamePanel").classList.add("hide");
-        globalAlert("alert-success", "You won!");
-        return false;
-    }
+    /* if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
+         document.getElementById("placementPanel").classList.remove("hide");
+         document.getElementById("gamePanel").classList.add("hide");
+         globalAlert("alert-success", "You won!");
+         return false;
+     }*/
     /***the computer's turn */
 
 
@@ -901,6 +952,36 @@ function placeBoat() {
             selectBoat(e.dataset.boat);
         }
     });
+
+
+}
+
+
+/*DOES NOT RESET AT DEAL******************************************/
+
+function deal(playerBet) {
+    if (playerBet === "any") {
+        playerBet = Number(document.querySelector("[name='anyAmount']").value);
+        document.getElementById("betAny").setAttribute("alt", playerBet);
+        document.querySelector("[name='anyAmount']").value = "";
+    }
+    [].forEach.call(document.querySelectorAll('.dealAmt'), function (e) {
+        e.classList.remove('active');
+        e.disabled = true;
+    });
+    document.querySelector(".dealAmt[alt='" + playerBet + "']").classList.add("active");
+    bet = playerBet;
+    document.getElementById("betTarget").innerHTML = "Bet: $" + bet;
+
+    document.getElementById("playerTotal").innerHTML = playerMoney;
+
+    document.getElementById("playerTotal").classList.add("hide");
+
+
+
+    showAlert("default", "default", "hide");
+
+
 
 
 }
