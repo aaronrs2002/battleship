@@ -895,4 +895,12 @@ function placeBoat() {
   <div id="placementPanel"></div>*/
     }
 
+
+    [].forEach.call(document.querySelectorAll("button[data-boat]"), (e, i) => {
+        if (i === 0) {
+            selectBoat(e.dataset.boat);
+        }
+    });
+
+
 }
