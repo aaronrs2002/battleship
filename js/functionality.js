@@ -81,35 +81,40 @@ const yaxis = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 let boards = ["playerBoard", "computerBoard"];
 let targetArr = [];
 let alreadyCalled = [];
-let rowsHTML = "";
-let columnsHTML = "";
-for (let i = 0; i < xaxis.length; i++) {
-    rowsHTML = rowsHTML + "<option value='" + xaxis[i] + "'>" + xaxis[i] + "</option>";
-    columnsHTML = columnsHTML + "<option value='" + yaxis[i] + "'>" + yaxis[i] + "</option>";
-}
 
-document.querySelector("select[name='rows']").innerHTML = rowsHTML;
-document.querySelector("select[name='columns']").innerHTML = columnsHTML;
+function buildGrid() {
 
-for (let a = 0; a < boards.length; a++) {
-    let gridLayout = "";
-    for (let j = 0; j < xaxis.length; j++) {
-        gridLayout = gridLayout + ` <ul class="list-unstyled inlineColumns"><li> <h2 class="text-capitalize text-center pt-2">${xaxis[j]}</h2></li>`;
-        for (let i = 0; i < yaxis.length; i++) {
-            gridLayout = gridLayout + `<li class='alert'  data-value='${xaxis[j] + yaxis[i]}'  onClick = "selectSq('${xaxis[j] + yaxis[i]}',${boards[a]})"} data-status="empty">${xaxis[j] + yaxis[i]} </li>`;
+
+    let rowsHTML = "";
+    let columnsHTML = "";
+    for (let i = 0; i < xaxis.length; i++) {
+        rowsHTML = rowsHTML + "<option value='" + xaxis[i] + "'>" + xaxis[i] + "</option>";
+        columnsHTML = columnsHTML + "<option value='" + yaxis[i] + "'>" + yaxis[i] + "</option>";
+    }
+
+    document.querySelector("select[name='rows']").innerHTML = rowsHTML;
+    document.querySelector("select[name='columns']").innerHTML = columnsHTML;
+
+    for (let a = 0; a < boards.length; a++) {
+        let gridLayout = "";
+        for (let j = 0; j < xaxis.length; j++) {
+            gridLayout = gridLayout + ` <ul class="list-unstyled inlineColumns"><li> <h2 class="text-capitalize text-center pt-2">${xaxis[j]}</h2></li>`;
+            for (let i = 0; i < yaxis.length; i++) {
+                gridLayout = gridLayout + `<li class='alert'  data-value='${xaxis[j] + yaxis[i]}'  onClick = "selectSq('${xaxis[j] + yaxis[i]}',${boards[a]})"} data-status="empty">${xaxis[j] + yaxis[i]} </li>`;
+            }
+            gridLayout = gridLayout + "</ul>";
         }
-        gridLayout = gridLayout + "</ul>";
-    }
-    switch (boards[a]) {
-        case "playerBoard":
-            document.getElementById("playerBoard").innerHTML = gridLayout;
-            break;
-        case "computerBoard":
-            document.getElementById("computerBoard").innerHTML = gridLayout;
-            break;
+        switch (boards[a]) {
+            case "playerBoard":
+                document.getElementById("playerBoard").innerHTML = gridLayout;
+                break;
+            case "computerBoard":
+                document.getElementById("computerBoard").innerHTML = gridLayout;
+                break;
+        }
     }
 }
-
+buildGrid();
 let hunting = false;
 
 function generate() {
@@ -978,6 +983,7 @@ function placeBoat() {
 /*DOES NOT RESET AT DEAL******************************************/
 
 function deal(playerBet) {
+    buildGrid();
     layoutBoats();
     document.getElementById("bothPanels").classList.remove("hide");
     if (playerBet === "any") {
