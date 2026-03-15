@@ -949,7 +949,7 @@ function placeBoat() {
     }
     if ((typeof document.querySelectorAll("#playerBoard  [data-status='" + activeBoat + "']").length) === "number") {
         if (!placementError) {
-            document.querySelector("button[data-boat='" + activeBoat + "']").classList.add("hide");
+            document.querySelector("button[data-boat='" + activeBoat + "']").remove();
         }
 
 
