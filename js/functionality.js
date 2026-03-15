@@ -59,6 +59,16 @@ for (let a = 0; a < boards.length; a++) {
 
 let hunting = false;
 
+function generate() {
+    let row;
+    let column;
+    column = yaxis[Math.floor(Math.random() * (10 - 0) + 0)];
+    row = xaxis[Math.floor(Math.random() * (10 - 0) + 0)];
+    return row + column;
+}
+
+
+
 function buildTargetArr(xPosition, yPosition, direction) {
     yPosition = Number(yPosition);
     // targetArr = [];
@@ -72,6 +82,10 @@ function buildTargetArr(xPosition, yPosition, direction) {
             }
 
         } else {
+            while (alreadyCalled.indexOf(thisCall) !== -1) {
+                thisCall = generate();
+            }
+            alreadyCalled.push(thisCall);
             console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
         }
         if (xaxis[xaxis.indexOf(xPosition) + 1] && yaxis[yaxis.indexOf(yPosition)]) {
@@ -81,6 +95,10 @@ function buildTargetArr(xPosition, yPosition, direction) {
             }
 
         } else {
+            while (alreadyCalled.indexOf(thisCall) !== -1) {
+                thisCall = generate();
+            }
+            alreadyCalled.push(thisCall);
             console.log("did not push " + xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
         }
 
@@ -91,6 +109,10 @@ function buildTargetArr(xPosition, yPosition, direction) {
             }
 
         } else {
+            while (alreadyCalled.indexOf(thisCall) !== -1) {
+                thisCall = generate();
+            }
+            alreadyCalled.push(thisCall);
             console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
         }
         console.log("xaxis[xaxis.indexOf(xPosition) - 1]: " + xaxis[xaxis.indexOf(xPosition) - 1] + "  - yaxis[yaxis.indexOf(yPosition)]: " + yaxis[yaxis.indexOf(yPosition)]);
@@ -102,6 +124,10 @@ function buildTargetArr(xPosition, yPosition, direction) {
             }
 
         } else {
+            while (alreadyCalled.indexOf(thisCall) !== -1) {
+                thisCall = generate();
+            }
+            alreadyCalled.push(thisCall);
             console.log("did not push " + xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
         }
     }
@@ -116,6 +142,11 @@ function buildTargetArr(xPosition, yPosition, direction) {
                     console.log("pushed " + xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]);
                 }
 
+            } else {
+                while (alreadyCalled.indexOf(thisCall) !== -1) {
+                    thisCall = generate();
+                }
+                alreadyCalled.push(thisCall);
             }
 
             if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) {
@@ -125,7 +156,13 @@ function buildTargetArr(xPosition, yPosition, direction) {
                     console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]);
                 }
 
+            } else {
+                while (alreadyCalled.indexOf(thisCall) !== -1) {
+                    thisCall = generate();
+                }
+                alreadyCalled.push(thisCall);
             }
+
             if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + i)]) {
                 if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]) === -1) {
                     document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)] + "]").classList.add("target");
@@ -133,7 +170,13 @@ function buildTargetArr(xPosition, yPosition, direction) {
                     console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]);
                 }
 
+            } else {
+                while (alreadyCalled.indexOf(thisCall) !== -1) {
+                    thisCall = generate();
+                }
+                alreadyCalled.push(thisCall);
             }
+
             if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) {
                 if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]) === -1) {
                     targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
@@ -141,7 +184,13 @@ function buildTargetArr(xPosition, yPosition, direction) {
                     console.log("pushed " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]);
                 }
 
+            } else {
+                while (alreadyCalled.indexOf(thisCall) !== -1) {
+                    thisCall = generate();
+                }
+                alreadyCalled.push(thisCall);
             }
+
         }
 
 
@@ -222,14 +271,6 @@ function selectSq(cell, player) {
         return false;
     }
     /***the computer's turn */
-    function generate() {
-        let row;
-        let column;
-        column = yaxis[Math.floor(Math.random() * (10 - 0) + 0)];
-        row = xaxis[Math.floor(Math.random() * (10 - 0) + 0)];
-        return row + column;
-    }
-
 
 
     function aiSelect() {
