@@ -839,8 +839,9 @@ function placeBoat() {
     let activeBoat = document.querySelector("#userBoats button.active[data-boat]").dataset.boat;
     let activeSize = document.querySelector("#userBoats button.active[data-boat]").dataset.count;
 
-    if (!document.querySelector("#playerBoard li[data-value='" + row + column + "']").dataset.status === "empty") {
+    if (document.querySelector("#playerBoard li[data-value='" + row + column + "']").dataset.status !== "empty") {
         document.getElementById("errorMessage").innerHTML = "Please select a vacant spot.";
+        document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.add("alert-success");
         return false;
     }
 
