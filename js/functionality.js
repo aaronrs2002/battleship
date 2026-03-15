@@ -826,6 +826,7 @@ function selectBoat(whichBoat) {
 
 
 function placeBoat() {
+    let placementError = false;
     if (!document.querySelector("#userBoats button.active[data-boat]")) {
         document.getElementById("errorMessage").innerHTML = "Please select a boat."
         return false;
@@ -854,13 +855,14 @@ function placeBoat() {
                 document.querySelector("#playerBoard li[data-value='" + row + (Number(column) + i) + "']").dataset.status = activeBoat;
             } else {
 
-                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Pleas try again.";
+                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Please try again.";
                 document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
                 [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
                     e.dataset.status = "empty";
                     e.classList.remove("alert-success");
 
                 });
+                placementError = true;
                 return false;
 
             }
@@ -875,13 +877,14 @@ function placeBoat() {
                 document.querySelector("#playerBoard li[data-value='" + row + (column - i) + "']").dataset.status = activeBoat;
             } else {
 
-                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Pleas try again.";
+                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Please try again.";
                 document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
                 [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
                     e.dataset.status = "empty";
                     e.classList.remove("alert-success");
 
-                })
+                });
+                placementError = true;
 
             }
 
@@ -902,13 +905,14 @@ function placeBoat() {
                 document.querySelector("#playerBoard li[data-value='" + xaxis[start + i] + column + "']").dataset.status = activeBoat;
             } else {
 
-                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Pleas try again.";
+                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Please try again.";
                 document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
                 [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
                     e.dataset.status = "empty";
                     e.classList.remove("alert-success");
 
-                })
+                });
+                placementError = true;
 
             }
 
@@ -930,20 +934,24 @@ function placeBoat() {
                 document.querySelector("#playerBoard li[data-value='" + xaxis[start - i] + column + "']").dataset.status = activeBoat;
             } else {
 
-                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Pleas try again.";
+                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Please try again.";
                 document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
                 [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
                     e.dataset.status = "empty";
                     e.classList.remove("alert-success");
 
-                })
+                });
 
+                placementError = true;
             }
 
         }
     }
     if ((typeof document.querySelectorAll("#playerBoard  [data-status='" + activeBoat + "']").length) === "number") {
-        document.querySelector("button[data-boat='" + activeBoat + "']").remove();
+        if (!placementError) {
+            document.querySelector("button[data-boat='" + activeBoat + "']").classList.add("hide");
+        }
+
 
     }
 
