@@ -26,7 +26,12 @@ if (localStorage.getItem("balance") && Number(localStorage.getItem("balance"))) 
 }
 document.querySelector("#playerMoney").innerHTML = playerMoney;
 
-
+function enableBts() {
+    /*forEach was not working*/
+    [].forEach.call(document.querySelectorAll('.dealAmt'), function (e) {
+        e.disabled = false;
+    });
+}
 
 function setPlayerMoney(passPlayerMoney, status, bet) {
     document.getElementById("playerMoney").innerHTML = passPlayerMoney;
@@ -292,6 +297,8 @@ function selectSq(cell, player) {
         globalAlert("alert-danger", "You lost!");
         playerMoney = (playerMoney - bet);
         setPlayerMoney(playerMoney, "lose", bet);
+        document.getElementById("bothPanels").classList.add("hide");
+        enableBts();
         return false;
     }
 
@@ -301,6 +308,8 @@ function selectSq(cell, player) {
         globalAlert("alert-success", "You won!");
         playerMoney = (playerMoney - bet);
         setPlayerMoney(playerMoney, "win", bet);
+        document.getElementById("bothPanels").classList.add("hide");
+        enableBts();
         return false;
     }
 
@@ -960,6 +969,8 @@ function placeBoat() {
 /*DOES NOT RESET AT DEAL******************************************/
 
 function deal(playerBet) {
+    layoutBoats();
+    document.getElementById("bothPanels").classList.remove("hide");
     if (playerBet === "any") {
         playerBet = Number(document.querySelector("[name='anyAmount']").value);
         document.getElementById("betAny").setAttribute("alt", playerBet);
