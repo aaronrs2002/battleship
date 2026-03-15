@@ -126,10 +126,61 @@
 
 
         </div>
+        <div class="col-md-12 py-2">
 
+            <div class="d-grid gap-2">
+                <button class="btn btn-info btn-block py-2" onClick="javascript:toggle('rules')" type="button"
+                    data-toggle="default">View Rules</button>
+                <button class="btn btn-info hide btn-block py-2" onClick="javascript:toggle('default')" type="button"
+                    data-toggle="rules">Hide Rules</button>
+            </div>
+
+            <div class="card hide" data-toggle="rules">
+                <div class="card-body">
+                    <h5 class="card-title" alt="Black Jack rules">Battle ship:</h5>
+                    <p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <iframe style="width: 100%; height: auto; min-height: 270px;"
+                                src="https://www.youtube.com/embed/wEUf-ej0c1c" title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p>Try to sink all the computer's boats before it finds and sinks all of your boats.</p>
+                            <p>This video walks through how to play this game. Then, it walks through the javascript I
+                                used to make this happen.</p>
+
+                            <ul>
+                                <li>
+                                    <i>Github - Check back for updates:</i><br />
+                                    <a href="https://github.com/aaronrs2002/battleship"
+                                        target="_blank">https://github.com/aaronrs2002/battleship</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
     </div>
 
-    </div>
+
+
+
+
+
+
+
+
+
     <div class="hide alert fadeInUp" role="alert" id="globalAlert"></div>
     <footer class="footer mt-auto py-3 animated fadeInUp">
         <div class="container">
