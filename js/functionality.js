@@ -54,13 +54,10 @@ function setPlayerMoney(passPlayerMoney, status, bet) {
 function showAlert(status, message, type) {
 
     if (message === "default") {
-        document.getElementById("status").classList.add("hide");
-        document.getElementById("status").classList.remove("alert-danger");
-        document.getElementById("status").classList.remove("alert-success");
+
     } else {
         document.getElementById("message").innerHTML = message;
-        document.getElementById("status").classList.remove("hide");
-        document.getElementById("status").classList.add(type);
+
         [].forEach.call(document.querySelectorAll('.dealAmt'), function (e) {
             e.disabled = false;
         });
@@ -128,6 +125,7 @@ function generate() {
 
 
 function buildTargetArr(xPosition, yPosition, direction) {
+    thisCall = xPosition + yPosition;
     yPosition = Number(yPosition);
     // targetArr = [];
     if (direction === "circle") {
@@ -983,8 +981,16 @@ function placeBoat() {
 /*DOES NOT RESET AT DEAL******************************************/
 
 function deal(playerBet) {
+    alreadyCalled = [];
+    targetArr = [];
+    boatTotal = 0;
+    anchorHit;
+    rowsUsed = [];
+    columnsUsed = [];
+    waitForNextTurn = false;
     buildGrid();
     layoutBoats();
+
     document.getElementById("bothPanels").classList.remove("hide");
     if (playerBet === "any") {
         playerBet = Number(document.querySelector("[name='anyAmount']").value);
