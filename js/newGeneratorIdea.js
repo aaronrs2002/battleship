@@ -1,19 +1,40 @@
 const columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 const rows = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 const direction = ["horizontal", "vertical"];
-
-
-let alreadyCalled = [];
 let availableCells = [];
+let alreadyCalled = [];
 
-function buildAvailable() {
-    for (let i = 0; i < columns.length; i++) {
-        for (let j = 0; j < rows.length; j++) {
-            availableCells.push(columns[i] + rows[j]);
+/*let state = {
+    thisCall: ""
+}*/
+
+
+
+for (let i = 0; i < columns.length; i++) {
+    for (let j = 0; j < rows.length; j++) {
+        availableCells.push(columns[i] + rows[j]);
+    }
+}
+
+
+const thisCall = (arr) => {
+    let selected = [];
+    let tempAvailable = [];
+    const chosenCell = arr[Math.floor(Math.random() * arr.length)];
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === chosenCell) {
+            selected = arr[i];
+            alreadyCalled.push(arr[i])
+        } else {
+            tempAvailable.push(arr[i]);
         }
+
     }
 
+    availableCells = tempAvailable;
+    return selected;
 }
+
 
 
 let boatTotal = 0;
@@ -81,7 +102,7 @@ function showAlert(status, message, type) {
 
     enableBts();
     ckHighScore();
-    return false;
+
 }
 
 /*start battleship code********************************************************************/
@@ -129,42 +150,19 @@ function buildGrid() {
 buildGrid();
 let hunting = false;
 
-/*function generate(availableCells) {
+/*function thisCall() {
     let row;
     let column;
     column = yaxis[Math.floor(Math.random() * (10 - 0) + 0)];
     row = xaxis[Math.floor(Math.random() * (10 - 0) + 0)];
     return row + column;
-}*/
-
-const generate = (arr) => {
-
-    console.log("GENERATE WAS CALLED arr: " + arr);
-    let selected = [];
-    let tempAvailable = [];
-    const chosenCell = arr[Math.floor(Math.random() * arr.length)];
-    console.log("chosenCell: " + chosenCell);
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === chosenCell) {
-            selected = arr[i];
-            // alreadyCalled.push(arr[i])
-        } else {
-            tempAvailable.push(arr[i]);
-        }
-
-    }
-
-    availableCells = tempAvailable;
-    console.log("selected: " + selected);
-    return selected;
 }
-
-
+*/
 
 
 
 function buildTargetArr(xPosition, yPosition, direction) {
-    thisCall = xPosition + yPosition;
+    // thisCall = xPosition + yPosition;
     yPosition = Number(yPosition);
     // targetArr = [];
     if (direction === "circle") {
@@ -177,12 +175,16 @@ function buildTargetArr(xPosition, yPosition, direction) {
             }
 
         } else {
-            /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                 thisCall = generate();
-             }*/
 
-            thisCall = generate(availableCells);
-            //alreadyCalled.push(thisCall);
+            thisCall(availableCells);
+
+
+
+
+
+
+
+            // alreadyCalled.push(thisCall);
             console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
         }
         if (xaxis[xaxis.indexOf(xPosition) + 1] && yaxis[yaxis.indexOf(yPosition)]) {
@@ -192,12 +194,12 @@ function buildTargetArr(xPosition, yPosition, direction) {
             }
 
         } else {
-            /*while (alreadyCalled.indexOf(thisCall) !== -1) {
-                thisCall = generate();
-            }*/
-            thisCall = generate(availableCells);
-            // alreadyCalled.push(thisCall);
-            console.log("did not push " + xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
+            /*  while (alreadyCalled.indexOf(thisCall) !== -1) {
+                  thisCall();
+              }
+              alreadyCalled.push(thisCall);
+              console.log("did not push " + xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);*/
+            thisCall(availableCells);
         }
 
         if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - 1)]) {
@@ -208,11 +210,11 @@ function buildTargetArr(xPosition, yPosition, direction) {
 
         } else {
             /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                 thisCall = generate();
-             }*/
-            thisCall = generate(availableCells);
-            //alreadyCalled.push(thisCall);
-            console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+                 thisCall();
+             }
+             alreadyCalled.push(thisCall);
+             console.log("did not push " + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);*/
+            thisCall(availableCells);
         }
         console.log("xaxis[xaxis.indexOf(xPosition) - 1]: " + xaxis[xaxis.indexOf(xPosition) - 1] + "  - yaxis[yaxis.indexOf(yPosition)]: " + yaxis[yaxis.indexOf(yPosition)]);
 
@@ -223,12 +225,13 @@ function buildTargetArr(xPosition, yPosition, direction) {
             }
 
         } else {
-            /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                 thisCall = generate();
-             }*/
-            thisCall = generate(availableCells);
-            //alreadyCalled.push(thisCall);
-            console.log("did not push " + xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
+            /*  while (alreadyCalled.indexOf(thisCall) !== -1) {
+                  thisCall();
+              }
+              alreadyCalled.push(thisCall);
+              console.log("did not push " + xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);*/
+
+            thisCall(availableCells);
         }
     }
 
@@ -243,11 +246,11 @@ function buildTargetArr(xPosition, yPosition, direction) {
                 }
 
             } else {
-                /*while (alreadyCalled.indexOf(thisCall) !== -1) {
-                    thisCall = generate();
-                }*/
-                thisCall = generate(availableCells);
-                // alreadyCalled.push(thisCall);
+                /* while (alreadyCalled.indexOf(thisCall) !== -1) {
+                     thisCall();
+                 }
+                 alreadyCalled.push(thisCall);*/
+                thisCall(availableCells);
             }
 
             if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) {
@@ -259,10 +262,10 @@ function buildTargetArr(xPosition, yPosition, direction) {
 
             } else {
                 /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                     thisCall = generate();
-                 }*/
-                thisCall = generate(availableCells);
-                // alreadyCalled.push(thisCall);
+                     thisCall();
+                 }
+                 alreadyCalled.push(thisCall);*/
+                thisCall(availableCells);
             }
 
             if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + i)]) {
@@ -273,11 +276,11 @@ function buildTargetArr(xPosition, yPosition, direction) {
                 }
 
             } else {
-                /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                     thisCall = generate();
-                 }*/
-                thisCall = generate(availableCells);
-                // alreadyCalled.push(thisCall);
+                /*  while (alreadyCalled.indexOf(thisCall) !== -1) {
+                      thisCall();
+                  }
+                  alreadyCalled.push(thisCall);*/
+                thisCall(availableCells);
             }
 
             if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) {
@@ -289,10 +292,10 @@ function buildTargetArr(xPosition, yPosition, direction) {
 
             } else {
                 /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                     thisCall = generate();
-                 }*/
-                thisCall = generate(availableCells);
-                // alreadyCalled.push(thisCall);
+                     thisCall();
+                 }
+                 alreadyCalled.push(thisCall);*/
+                thisCall(availableCells);
             }
 
         }
@@ -302,24 +305,22 @@ function buildTargetArr(xPosition, yPosition, direction) {
 
     }
 
-    /* if ((typeof direction) === "number") {
- 
-         if (alreadyCalled.indexOf(anchorHit) > targetArr.indexOf(anchorHit)) {
- 
- 
-         }
- 
- 
- 
-     }*/
-    // alreadyCalled.push(xPosition + yPosition);
+    if ((typeof direction) === "number") {
+
+        if (alreadyCalled.indexOf(anchorHit) > targetArr.indexOf(anchorHit)) {
+
+
+        }
+
+
+
+    }
+    alreadyCalled.push(xPosition + yPosition);
 
     let tempTargetArr = [];
     for (let i = 0; i < targetArr.length; i++) {
         if (alreadyCalled.indexOf(targetArr[i]) === -1) {
-
             tempTargetArr.push(targetArr[i]);
-            // alreadyCalled.push(targetArr[i]);
             document.querySelector("#computerBoard  li[data-value='" + targetArr[i] + "']").classList.remove("target");
         }
 
@@ -352,7 +353,7 @@ function selectSq(cell, player) {
         setPlayerMoney(playerMoney, "lose", bet);
         document.getElementById("bothPanels").classList.add("hide");
         enableBts();
-        return false;
+
     }
 
     if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
@@ -363,7 +364,7 @@ function selectSq(cell, player) {
         setPlayerMoney(playerMoney, "win", bet);
         document.getElementById("bothPanels").classList.add("hide");
         enableBts();
-        return false;
+
     }
 
     if (document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status === "empty") {
@@ -387,9 +388,7 @@ function selectSq(cell, player) {
 
 
     function aiSelect() {
-
-
-        let thisCall = ""
+        thisCall(availableCells);
 
         let howManyleft = 0;
         [].forEach.call(document.querySelectorAll("#playerBoard .alert-success[data-value]"), (e) => {
@@ -397,12 +396,9 @@ function selectSq(cell, player) {
         });
 
 
-        if (howManyleft <= 6) {
+        if (howManyleft === 6) {
             [].forEach.call(document.querySelectorAll("#playerBoard li.alert-success[data-value]"), (e) => {
-                if (targetArr.indexOf(e.dataset.value) === -1) {
-                    targetArr.push(e.dataset.value);
-                }
-
+                targetArr.push(e.dataset.value);
 
             });
 
@@ -415,21 +411,21 @@ function selectSq(cell, player) {
 
 
         if (!document.querySelector("#playerBoard .target[data-value]")) {
-            /*while (alreadyCalled.indexOf(thisCall) !== -1) {
-                thisCall = generate();
-            }*/
-            console.log("availableCells FROM INITITAL CHOICE: " + availableCells);
-            thisCall = generate(availableCells);
-            //alreadyCalled.push(thisCall);
+            /* while (alreadyCalled.indexOf(thisCall) !== -1) {
+                 thisCall();
+             }
+             alreadyCalled.push(thisCall);*/
+
+
         } else {
             [].forEach.call(document.querySelectorAll("#playerBoard .target[data-value]"), (e, i) => {
 
                 if (i === 0) {
-                    thisCall = e.dataset.value;
+                    let buildTarget = e.dataset.value;
                     e.classList.remove("target");
                     let tempArr = [];
                     for (let i = 0; i < targetArr.length; i++) {
-                        if (targetArr[i] !== thisCall) {
+                        if (targetArr[i] !== buildTarget) {
                             tempArr.push(targetArr[i]);
                         }
 
@@ -440,22 +436,22 @@ function selectSq(cell, player) {
 
         }
         console.log("this call: " + thisCall);
-        /*if (!thisCall) {
-            thisCall = generate(availableCells);
-        }*/
+        /* if (!thisCall) {
+             thisCall();
+         }*/
+
+
 
         if (targetArr.length === 0) {
-            if (document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
+            console.log(`document.querySelector("#playerBoard  li[data-value='empty']"): ` + document.querySelector("#playerBoard  li[data-value='empty']"))
+            if (document.querySelector("#playerBoard  li[data-value='empty']") && document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
-                alreadyCalled.push(thisCall);
-
                 hunting = false;
             } else {
 
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.remove("alert-success");
-                alreadyCalled.push(thisCall);
                 hunting = true;
                 buildTargetArr(thisCall[0], thisCall.substring(1), "circle")
                 for (let i = 0; i < targetArr.length; i++) {
@@ -468,19 +464,19 @@ function selectSq(cell, player) {
 
 
             console.log("alreadyCalled: " + alreadyCalled + " - targetArr: " + targetArr);
+            console.log("availabnleCells: " + availableCells);
         } else {
 
 
             //  console.log("status: " + document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status)
             if (document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-info");
-                alreadyCalled.push(thisCall);
             } else {
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status = "hit";
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.add("alert-danger");
                 document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").classList.remove("alert-success");
                 document.querySelector("#playerBoard li[data-value='" + thisCall + "']").classList.remove("target");
-                alreadyCalled.push(thisCall);
+
                 hunt(thisCall, "runXY");
                 anchorHit = thisCall;
             }
@@ -754,7 +750,10 @@ function layoutBoats() {
                                     if (document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "'][data-status='empty']"))
 
                                         document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.type = boatsObj[i].type;
-                                    document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.status = "occupied";
+                                    if (document.querySelector("#computerBoard li[data-value='occupied']")) {
+                                        document.querySelector("#computerBoard li[data-value='" + columns[column] + rows[row + j] + "']").dataset.status = "occupied";
+                                    }
+
                                 }
                             }
 
@@ -883,7 +882,7 @@ function selectBoat(whichBoat) {
         } else {
             e.classList.remove("active");
         }
-    })
+    });
 
 }
 
@@ -892,7 +891,7 @@ function placeBoat() {
     let placementError = false;
     if (!document.querySelector("#userBoats button.active[data-boat]")) {
         document.getElementById("errorMessage").innerHTML = "Please select a boat."
-        return false;
+
     }
 
     document.getElementById("errorMessage").innerHTML = "";
@@ -905,7 +904,7 @@ function placeBoat() {
     if (document.querySelector("#playerBoard li[data-value='" + row + column + "']").dataset.status !== "empty") {
         document.getElementById("errorMessage").innerHTML = "Please select a vacant spot.";
         document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.add("alert-success");
-        return false;
+
     }
 
 
@@ -927,7 +926,7 @@ function placeBoat() {
 
                 });
                 placementError = true;
-                return false;
+
 
             }
 
@@ -1043,7 +1042,6 @@ function placeBoat() {
 function deal(playerBet) {
     alreadyCalled = [];
     availableCells = [];
-    buildAvailable();
     targetArr = [];
     boatTotal = 0;
     anchorHit;
@@ -1071,10 +1069,12 @@ function deal(playerBet) {
 
     document.getElementById("playerTotal").classList.add("hide");
 
+    setTimeout(() => {
+        selectBoat('Carrier');
+    }, 500);
 
 
     showAlert("default", "default", "hide");
-
 
 
 
