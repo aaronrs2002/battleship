@@ -831,7 +831,7 @@ function layoutBoats() {
 
 
 
-                    if (destroyerSuccess !== 3) {
+                    if (destroyerSuccess !== 2) {
                         [].forEach.call(document.querySelectorAll("#computerBoard li[data-type='Destroyer']"), (e) => {
                             e.removeAttribute("data-type");
                             e.dataset.status = "empty";
