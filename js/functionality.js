@@ -445,6 +445,21 @@ function selectSq(cell, player) {
 
         }
         console.log("this call: " + thisCall);
+
+        if (!thisCall || thisCall === "") {
+            availableCells = [];
+            for (let i = 0; i < columns.length; i++) {
+                for (let j = 0; j < rows.length; j++) {
+                    if (alreadyCalled.indexOf((columns[i] + rows[j])) === -1) {
+                        availableCells.push(columns[i] + rows[j]);
+                    }
+
+                }
+            }
+            console.log("WE REBUILT THE AVAILABLE CELLS!")
+            aiSelect();
+        }
+
         /*if (!thisCall) {
             thisCall = generate(availableCells);
         }*/
