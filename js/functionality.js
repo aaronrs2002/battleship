@@ -346,7 +346,7 @@ function hunt(startpoint, direction) {
 function selectSq(cell, player) {
     console.log("PLAYER: " + JSON.stringify(player))
     if (player === "playerBoard") {
-        globalAlert("alert-danger", "Why do you want to sink your own ships? that is your board.");
+        globalAlert("alert-danger", "Why do you want to sink your own ships? That is your board.");
         return false;
     }
     if (document.querySelectorAll("#playerBoard  li[data-status='hit']").length === 17) {
