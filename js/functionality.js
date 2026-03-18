@@ -443,7 +443,7 @@ function selectSq(cell, player) {
         }
         console.log("this call: " + thisCall);
 
-        if (!thisCall || thisCall === "") {
+        if (!thisCall || thisCall === "" || thisCall.indexOf("undefined") !== -1 || thisCall.indexOf("NaN") !== -1) {
             availableCells = [];
             for (let i = 0; i < columns.length; i++) {
                 for (let j = 0; j < rows.length; j++) {
