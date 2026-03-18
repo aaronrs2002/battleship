@@ -363,7 +363,7 @@ function selectSq(cell, player) {
         document.getElementById("placementPanel").classList.remove("hide");
         document.getElementById("gamePanel").classList.add("hide");
         globalAlert("alert-success", "You won!");
-        playerMoney = (playerMoney - bet);
+        playerMoney = (playerMoney + bet);
         setPlayerMoney(playerMoney, "win", bet);
         document.getElementById("bothPanels").classList.add("hide");
         enableBts();
