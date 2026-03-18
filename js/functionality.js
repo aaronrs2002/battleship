@@ -455,11 +455,9 @@ function selectSq(cell, player) {
             }
             console.log("WE REBUILT THE AVAILABLE CELLS!: " + availableCells);
             thisCall = generate(availableCells);
+
         }
 
-        /*if (!thisCall) {
-            thisCall = generate(availableCells);
-        }*/
 
         if (targetArr.length === 0) {
             if (document.querySelector("#playerBoard  li[data-value='" + thisCall + "']").dataset.status === "empty") {
