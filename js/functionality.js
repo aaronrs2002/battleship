@@ -112,7 +112,7 @@ function buildGrid() {
         for (let j = 0; j < xaxis.length; j++) {
             gridLayout = gridLayout + ` <ul class="list-unstyled inlineColumns"><li> <h2 class="text-capitalize text-center pt-2">${xaxis[j]}</h2></li>`;
             for (let i = 0; i < yaxis.length; i++) {
-                gridLayout = gridLayout + `<li class='alert'  data-value='${xaxis[j] + yaxis[i]}'  onClick = "selectSq('${xaxis[j] + yaxis[i]}',${boards[a]})"} data-status="empty">${xaxis[j] + yaxis[i]} </li>`;
+                gridLayout = gridLayout + `<li class='alert'  data-value='${xaxis[j] + yaxis[i]}'  onClick="selectSq('${xaxis[j] + yaxis[i]}','${boards[a]}')" data-status="empty">${xaxis[j] + yaxis[i]} </li>`;
             }
             gridLayout = gridLayout + "</ul>";
         }
@@ -344,6 +344,11 @@ function hunt(startpoint, direction) {
 }
 
 function selectSq(cell, player) {
+    console.log("PLAYER: " + JSON.stringify(player))
+    if (player === "playerBoard") {
+        globalAlert("alert-danger", "Why do you want to sink your own ships? that is your board.");
+        return false;
+    }
     if (document.querySelectorAll("#playerBoard  li[data-status='hit']").length === 17) {
         document.getElementById("placementPanel").classList.remove("hide");
         document.getElementById("gamePanel").classList.add("hide");
