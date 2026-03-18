@@ -1076,7 +1076,7 @@ function deal(playerBet) {
 
     document.getElementById("playerTotal").classList.add("hide");
 
-    toggle("");
+    toggle("default");
     selectBoat('Carrier');
     showAlert("default", "default", "hide");
 
