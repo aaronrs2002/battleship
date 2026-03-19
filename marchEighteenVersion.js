@@ -154,24 +154,7 @@ const generate = (arr) => {
 
     }
 
-
-
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            // Pick a random index from 0 to i
-            const j = Math.floor(Math.random() * (i + 1));
-
-            // Swap elements at indices i and j
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-    console.log(tempAvailable);
-    tempAvailable = shuffleArray(tempAvailable);
-    console.log(tempAvailable); // Outputs a randomized array, e.g., [4, 1, 6, 5, 2, 7, 3]
     availableCells = tempAvailable;
-
-
     console.log("selected: " + selected);
     return selected;
 }
@@ -251,59 +234,72 @@ function buildTargetArr(xPosition, yPosition, direction) {
 
     if (direction === "runXY") {
         for (let i = 1; i < 6; i++) {
+            if (xaxis[xaxis.indexOf(xPosition + i)] && yaxis[yaxis.indexOf(yPosition)]) {
+                if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
 
-            // right on x-axis
-            if (xaxis[xaxis.indexOf(xPosition) + i] && yaxis[yaxis.indexOf(yPosition)]) {
-                if (
-                    alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition) + i] + yaxis[yaxis.indexOf(yPosition)]) === -1 &&
-                    targetArr.indexOf(xaxis[xaxis.indexOf(xPosition) + i] + yaxis[yaxis.indexOf(yPosition)]) === -1
-                ) {
-                    targetArr.push(xaxis[xaxis.indexOf(xPosition) + i] + yaxis[yaxis.indexOf(yPosition)]);
-                    document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition) + i] + yaxis[yaxis.indexOf(yPosition)] + "]").classList.add("target");
+                    targetArr.push(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]);
+                    document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)] + "]").classList.add("target");
+
                 }
+
             } else {
+                /*while (alreadyCalled.indexOf(thisCall) !== -1) {
+                    thisCall = generate();
+                }*/
                 thisCall = generate(availableCells);
+                // alreadyCalled.push(thisCall);
             }
 
-            // down on y-axis
             if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) {
-                if (
-                    alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]) === -1 &&
-                    targetArr.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]) === -1
-                ) {
+                if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition - i)] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
                     document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)] + "]").classList.add("target");
                     targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]);
+
                 }
+
             } else {
+                /* while (alreadyCalled.indexOf(thisCall) !== -1) {
+                     thisCall = generate();
+                 }*/
                 thisCall = generate(availableCells);
+                // alreadyCalled.push(thisCall);
             }
 
-            // up on y-axis
             if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + i)]) {
-                if (
-                    alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]) === -1 &&
-                    targetArr.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]) === -1
-                ) {
+                if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]) === -1) {
                     document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)] + "]").classList.add("target");
                     targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]);
+
                 }
+
             } else {
+                /* while (alreadyCalled.indexOf(thisCall) !== -1) {
+                     thisCall = generate();
+                 }*/
                 thisCall = generate(availableCells);
+                // alreadyCalled.push(thisCall);
             }
 
-            // left on x-axis
-            if (xaxis[xaxis.indexOf(xPosition) - i] && yaxis[yaxis.indexOf(yPosition)]) {
-                if (
-                    alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition) - i] + yaxis[yaxis.indexOf(yPosition)]) === -1 &&
-                    targetArr.indexOf(xaxis[xaxis.indexOf(xPosition) - i] + yaxis[yaxis.indexOf(yPosition)]) === -1
-                ) {
-                    targetArr.push(xaxis[xaxis.indexOf(xPosition) - i] + yaxis[yaxis.indexOf(yPosition)]);
-                    document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition) - i] + yaxis[yaxis.indexOf(yPosition)] + "]").classList.add("target");
+            if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) {
+                if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]) === -1) {
+                    targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+                    document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)] + "]").classList.add("target");
+
                 }
+
             } else {
+                /* while (alreadyCalled.indexOf(thisCall) !== -1) {
+                     thisCall = generate();
+                 }*/
                 thisCall = generate(availableCells);
+                // alreadyCalled.push(thisCall);
             }
+
         }
+
+
+
+
     }
 
     /* if ((typeof direction) === "number") {
