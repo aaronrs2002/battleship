@@ -155,21 +155,6 @@ const generate = (arr) => {
     }
 
 
-    availableCells = tempAvailable;
-
-
-    console.log("selected: " + selected);
-    return selected;
-}
-
-
-
-
-
-function buildTargetArr(xPosition, yPosition, direction) {
-
-    let tempAvailable = [];
-
     function shuffleShots(array) {
         for (let i = array.length - 1; i > 0; i--) {
             // Pick a random index from 0 to i
@@ -187,6 +172,15 @@ function buildTargetArr(xPosition, yPosition, direction) {
     availableCells = tempAvailable;
 
 
+    console.log("selected: " + selected);
+    return selected;
+}
+
+
+
+
+
+function buildTargetArr(xPosition, yPosition, direction) {
     let thisCall = xPosition + yPosition;
     yPosition = Number(yPosition);
     // targetArr = [];
