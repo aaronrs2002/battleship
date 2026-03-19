@@ -168,7 +168,7 @@ const generate = (arr) => {
 
 function buildTargetArr(xPosition, yPosition, direction) {
 
-
+    let tempAvailable = [];
 
     function shuffleShots(array) {
         for (let i = array.length - 1; i > 0; i--) {
