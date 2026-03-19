@@ -167,6 +167,26 @@ const generate = (arr) => {
 
 
 function buildTargetArr(xPosition, yPosition, direction) {
+
+
+
+    function shuffleShots(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            // Pick a random index from 0 to i
+            const j = Math.floor(Math.random() * (i + 1));
+
+            // Swap elements at indices i and j
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+    console.log(tempAvailable);
+    tempAvailable = shuffleShots(availableCells);
+    console.log(tempAvailable); // Outputs a randomized array, e.g., [4, 1, 6, 5, 2, 7, 3]
+
+    availableCells = tempAvailable;
+
+
     let thisCall = xPosition + yPosition;
     yPosition = Number(yPosition);
     // targetArr = [];
@@ -186,21 +206,6 @@ function buildTargetArr(xPosition, yPosition, direction) {
 
 
 
-            function shuffleShots(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    // Pick a random index from 0 to i
-                    const j = Math.floor(Math.random() * (i + 1));
-
-                    // Swap elements at indices i and j
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
-            }
-            console.log(tempAvailable);
-            tempAvailable = shuffleShots(availableCells);
-            console.log(tempAvailable); // Outputs a randomized array, e.g., [4, 1, 6, 5, 2, 7, 3]
-
-            availableCells = tempAvailable;
 
 
             thisCall = generate(availableCells);
