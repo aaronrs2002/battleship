@@ -197,7 +197,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
                 return array;
             }
             console.log(tempAvailable);
-            tempAvailable = shuffleShots(tempAvailable);
+            tempAvailable = shuffleShots(availableCells);
             console.log(tempAvailable); // Outputs a randomized array, e.g., [4, 1, 6, 5, 2, 7, 3]
 
             availableCells = tempAvailable;
