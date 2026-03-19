@@ -204,10 +204,6 @@ function buildTargetArr(xPosition, yPosition, direction) {
                  thisCall = generate();
              }*/
 
-
-
-
-
             thisCall = generate(availableCells);
             //alreadyCalled.push(thisCall);
 
