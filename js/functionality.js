@@ -348,16 +348,6 @@ function selectSq(cell, player) {
         globalAlert("alert-danger", "Why do you want to sink your own ships? That is your board.");
         return false;
     }
-    if (document.querySelectorAll("#playerBoard  li[data-status='hit']").length === 17) {
-        document.getElementById("placementPanel").classList.remove("hide");
-        document.getElementById("gamePanel").classList.add("hide");
-        globalAlert("alert-danger", "You lost!");
-        playerMoney = (playerMoney - bet);
-        setPlayerMoney(playerMoney, "lose", bet);
-        document.getElementById("bothPanels").classList.add("hide");
-        enableBts();
-        return false;
-    }
 
     if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
         document.getElementById("placementPanel").classList.remove("hide");
@@ -369,6 +359,20 @@ function selectSq(cell, player) {
         enableBts();
         return false;
     }
+
+
+    if (document.querySelectorAll("#playerBoard  li[data-status='hit']").length === 17) {
+        document.getElementById("placementPanel").classList.remove("hide");
+        document.getElementById("gamePanel").classList.add("hide");
+        globalAlert("alert-danger", "You lost!");
+        playerMoney = (playerMoney - bet);
+        setPlayerMoney(playerMoney, "lose", bet);
+        document.getElementById("bothPanels").classList.add("hide");
+        enableBts();
+        return false;
+    }
+
+
 
     if (document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status === "empty") {
         document.querySelector("#computerBoard  li[data-value='" + cell + "']").classList.add("alert-info");
