@@ -349,16 +349,6 @@ function selectSq(cell, player) {
         return false;
     }
 
-    if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
-        document.getElementById("placementPanel").classList.remove("hide");
-        document.getElementById("gamePanel").classList.add("hide");
-        globalAlert("alert-success", "You won!");
-        playerMoney = (playerMoney + bet);
-        setPlayerMoney(playerMoney, "win", bet);
-        document.getElementById("bothPanels").classList.add("hide");
-        enableBts();
-        return false;
-    }
 
 
     if (document.querySelectorAll("#playerBoard  li[data-status='hit']").length === 17) {
@@ -372,6 +362,16 @@ function selectSq(cell, player) {
         return false;
     }
 
+    if (document.querySelectorAll("#computerBoard  li[data-status='hit']").length === 17) {
+        document.getElementById("placementPanel").classList.remove("hide");
+        document.getElementById("gamePanel").classList.add("hide");
+        globalAlert("alert-success", "You won!");
+        playerMoney = (playerMoney + bet);
+        setPlayerMoney(playerMoney, "win", bet);
+        document.getElementById("bothPanels").classList.add("hide");
+        enableBts();
+        return false;
+    }
 
 
     if (document.querySelector("#computerBoard  li[data-value='" + cell + "']").dataset.status === "empty") {
