@@ -932,13 +932,16 @@ function placeBoat() {
                 document.querySelector("#playerBoard li[data-value='" + row + (Number(column) + i) + "']").dataset.status = activeBoat;
             } else {
 
-                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Please try again.";
+                document.getElementById("errorMessage").innerHTML = "Boats cannot overlap, or go off the board. Please try again.";
                 document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
-                [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
-                    e.dataset.status = "empty";
-                    e.classList.remove("alert-success");
+                setTimeout(() => {
+                    [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
+                        e.dataset.status = "empty";
+                        e.classList.remove("alert-success");
 
-                });
+                    });
+
+                }, 500);
                 placementError = true;
                 return false;
 
@@ -954,13 +957,16 @@ function placeBoat() {
                 document.querySelector("#playerBoard li[data-value='" + row + (column - i) + "']").dataset.status = activeBoat;
             } else {
 
-                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Please try again.";
+                document.getElementById("errorMessage").innerHTML = "Boats cannot overlap, or go off the board. Please try again.";
                 document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
-                [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
-                    e.dataset.status = "empty";
-                    e.classList.remove("alert-success");
+                setTimeout(() => {
+                    [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
+                        e.dataset.status = "empty";
+                        e.classList.remove("alert-success");
 
-                });
+                    });
+
+                }, 500);
                 placementError = true;
 
             }
@@ -978,13 +984,18 @@ function placeBoat() {
                 document.querySelector("#playerBoard li[data-value='" + xaxis[start + i] + column + "']").dataset.status = activeBoat;
             } else {
 
-                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Please try again.";
-                document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
-                [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
-                    e.dataset.status = "empty";
-                    e.classList.remove("alert-success");
+                document.getElementById("errorMessage").innerHTML = "Boats cannot overlap, or go off the board. Please try again.";
 
-                });
+                document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
+                setTimeout(() => {
+                    [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
+                        e.dataset.status = "empty";
+                        e.classList.remove("alert-success");
+
+                    });
+
+                }, 500);
+
                 placementError = true;
 
             }
@@ -1002,13 +1013,16 @@ function placeBoat() {
                 document.querySelector("#playerBoard li[data-value='" + xaxis[start - i] + column + "']").dataset.status = activeBoat;
             } else {
 
-                document.getElementById("errorMessage").innerHTML = "That boat will go off your board. Please try again.";
+                document.getElementById("errorMessage").innerHTML = "Boats cannot overlap, or go off the board. Please try again.";
                 document.querySelector("#playerBoard li[data-value='" + row + column + "']").classList.remove("alert-success");
-                [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
-                    e.dataset.status = "empty";
-                    e.classList.remove("alert-success");
+                setTimeout(() => {
+                    [].forEach.call(document.querySelectorAll("#playerBoard [data-status='" + activeBoat + "']"), (e) => {
+                        e.dataset.status = "empty";
+                        e.classList.remove("alert-success");
 
-                });
+                    });
+
+                }, 500);
 
                 placementError = true;
             }
