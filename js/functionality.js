@@ -233,13 +233,14 @@ function buildTargetArr(xPosition, yPosition, direction) {
     }
 
     if (direction === "runXY") {
+
         for (let i = 1; i < 6; i++) {
             if (xaxis[xaxis.indexOf(xPosition + i)] && yaxis[yaxis.indexOf(yPosition)]) {
                 if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
 
                     targetArr.push(xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)]);
                     document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition + i)] + yaxis[yaxis.indexOf(yPosition)] + "]").classList.add("target");
-
+                    console.log("pushing from the y axis 1");/*THIS ONE DOESN'T SEEM TO WORK. NOT SURE WE NEED IT*/
                 }
 
             } else {
@@ -254,6 +255,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
                 if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition - i)] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
                     document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)] + "]").classList.add("target");
                     targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)]);
+                    console.log("pushing from the y axis 2");
 
                 }
 
@@ -269,7 +271,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
                 if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]) === -1) {
                     document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)] + "]").classList.add("target");
                     targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + i)]);
-
+                    console.log("pushing from the x axis 1");
                 }
 
             } else {
@@ -284,7 +286,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
                 if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - i)]) === -1 && targetArr.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]) === -1) {
                     targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
                     document.querySelector("li[data-value=" + xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - i)] + "]").classList.add("target");
-
+                    console.log("pushing from the x axis 2");
                 }
 
             } else {

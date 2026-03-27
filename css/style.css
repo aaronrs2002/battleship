@@ -37,3 +37,9 @@ ul.list-unstyled.inline li:hover {
 .hide {
     display: none !important;
 }
+
+.text-danger {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #333;
+
+}
