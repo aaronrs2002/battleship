@@ -43,3 +43,11 @@ ul.list-unstyled.inline li:hover {
     -webkit-text-stroke-color: #333;
 
 }
+
+@media (max-width: 767px) {
+
+    #playerBoard .alert[data-value] {
+        --bs-alert-padding-x: .5rem;
+    }
+
+}
