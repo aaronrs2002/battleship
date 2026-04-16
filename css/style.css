@@ -46,7 +46,8 @@ ul.list-unstyled.inline li:hover {
 
 @media (max-width: 767px) {
 
-    #playerBoard .alert[data-value] {
+    #playerBoard .alert[data-value],
+    #computerBoard .alert[data-value] {
         --bs-alert-padding-x: .5rem;
     }
 
