@@ -167,68 +167,61 @@ function buildTargetArr(xPosition, yPosition, direction) {
     let thisCall = xPosition + yPosition;
     yPosition = Number(yPosition);
     // targetArr = [];
-    if (direction === "circle") {
+    if (direction === "circle") {/*names are irrelavant now it just goes on the x axis*/
+        for (let i = 1; i < 6; i++) {
+            /* if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + 1)]) {
+                 if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]) === -1) {
+     
+                     targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
+     
+                 }
+     
+             } else {
+     
+     
+                 thisCall = generate(availableCells);
+                 //alreadyCalled.push(thisCall);
+     
+             }*/
+            if (xaxis[xaxis.indexOf(xPosition) + i] && yaxis[yaxis.indexOf(yPosition)]) {
+                if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition) + i] + yaxis[yaxis.indexOf(yPosition)]) === -i) {
+                    targetArr.push(xaxis[xaxis.indexOf(xPosition) + i] + yaxis[yaxis.indexOf(yPosition)]);
 
-        if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + 1)]) {
-            if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]) === -1) {
+                }
 
-                targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]);
+            } else {
+
+                thisCall = generate(availableCells);
+                // alreadyCalled.push(thisCall);
 
             }
 
-        } else {
-            /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                 thisCall = generate();
+            /* if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - 1)]) {
+                 if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - 1)]) === -1) {
+                     targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+     
+                 }
+     
+             } else {
+     
+                 thisCall = generate(availableCells);
+                 //alreadyCalled.push(thisCall);
+     
              }*/
 
-            thisCall = generate(availableCells);
-            //alreadyCalled.push(thisCall);
 
-        }
-        if (xaxis[xaxis.indexOf(xPosition) + 1] && yaxis[yaxis.indexOf(yPosition)]) {
-            if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
-                targetArr.push(xaxis[xaxis.indexOf(xPosition) + 1] + yaxis[yaxis.indexOf(yPosition)]);
+            if (xaxis[xaxis.indexOf(xPosition) - i] && yaxis[yaxis.indexOf(yPosition)]) {
+                if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition) - i] + yaxis[yaxis.indexOf(yPosition)]) === -i) {
+                    targetArr.push(xaxis[xaxis.indexOf(xPosition) - i] + yaxis[yaxis.indexOf(yPosition)]);
 
-            }
+                }
 
-        } else {
-            /*while (alreadyCalled.indexOf(thisCall) !== -1) {
-                thisCall = generate();
-            }*/
-            thisCall = generate(availableCells);
-            // alreadyCalled.push(thisCall);
+            } else {
 
-        }
-
-        if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - 1)]) {
-            if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition - 1)]) === -1) {
-                targetArr.push(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition - 1)]);
+                thisCall = generate(availableCells);
+                //alreadyCalled.push(thisCall);
 
             }
-
-        } else {
-            /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                 thisCall = generate();
-             }*/
-            thisCall = generate(availableCells);
-            //alreadyCalled.push(thisCall);
-
-        }
-
-
-        if (xaxis[xaxis.indexOf(xPosition) - 1] && yaxis[yaxis.indexOf(yPosition)]) {
-            if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]) === -1) {
-                targetArr.push(xaxis[xaxis.indexOf(xPosition) - 1] + yaxis[yaxis.indexOf(yPosition)]);
-
-            }
-
-        } else {
-            /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                 thisCall = generate();
-             }*/
-            thisCall = generate(availableCells);
-            //alreadyCalled.push(thisCall);
-
         }
     }
 
@@ -244,9 +237,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
                 }
 
             } else {
-                /*while (alreadyCalled.indexOf(thisCall) !== -1) {
-                    thisCall = generate();
-                }*/
+
                 thisCall = generate(availableCells);
                 // alreadyCalled.push(thisCall);
             }
@@ -260,9 +251,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
                 }
 
             } else {
-                /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                     thisCall = generate();
-                 }*/
+
                 thisCall = generate(availableCells);
                 // alreadyCalled.push(thisCall);
             }
@@ -275,9 +264,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
                 }
 
             } else {
-                /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                     thisCall = generate();
-                 }*/
+
                 thisCall = generate(availableCells);
                 // alreadyCalled.push(thisCall);
             }
@@ -290,9 +277,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
                 }
 
             } else {
-                /* while (alreadyCalled.indexOf(thisCall) !== -1) {
-                     thisCall = generate();
-                 }*/
+
                 thisCall = generate(availableCells);
                 // alreadyCalled.push(thisCall);
             }
@@ -407,7 +392,7 @@ function selectSq(cell, player) {
         });
 
 
-        if (howManyleft <= 6) {
+        if (howManyleft <= 8) {
             [].forEach.call(document.querySelectorAll("#playerBoard li.alert-success[data-value]"), (e) => {
                 if (targetArr.indexOf(e.dataset.value) === -1) {
                     targetArr.push(e.dataset.value);
