@@ -167,7 +167,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
     let thisCall = xPosition + yPosition;
     yPosition = Number(yPosition);
     // targetArr = [];
-    if (direction === "circle") {/*names are irrelavant now it just goes on the x axis*/
+    if (direction === "circle" || direction === "runXY" && targetArr.length === 0) {/*names are irrelavant now it just goes on the x axis*/
         for (let i = 1; i < 6; i++) {
             /* if (xaxis[xaxis.indexOf(xPosition)] && yaxis[yaxis.indexOf(yPosition + 1)]) {
                  if (alreadyCalled.indexOf(xaxis[xaxis.indexOf(xPosition)] + yaxis[yaxis.indexOf(yPosition + 1)]) === -1) {
@@ -223,9 +223,7 @@ function buildTargetArr(xPosition, yPosition, direction) {
 
             }
         }
-    }
 
-    if (direction === "runXY") {
 
         for (let i = 1; i < 6; i++) {
             if (xaxis[xaxis.indexOf(xPosition + i)] && yaxis[yaxis.indexOf(yPosition)]) {
@@ -287,6 +285,8 @@ function buildTargetArr(xPosition, yPosition, direction) {
 
 
 
+    } else {
+        thisCall = generate(availableCells);
     }
 
     /* if ((typeof direction) === "number") {
