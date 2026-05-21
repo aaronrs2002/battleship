@@ -392,7 +392,7 @@ function selectSq(cell, player) {
         });
 
 
-        if (howManyleft <= 8) {
+        if (howManyleft <= 6) {
             [].forEach.call(document.querySelectorAll("#playerBoard li.alert-success[data-value]"), (e) => {
                 if (targetArr.indexOf(e.dataset.value) === -1) {
                     targetArr.push(e.dataset.value);
